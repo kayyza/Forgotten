@@ -1,0 +1,35 @@
+Class documentation
+<---- javadoc command: ---->
+D:\DOWNLOADS\jdk\bin\javadoc.exe
+-author
+-version
+-nodeprecated
+-protected
+-Xdoclint:none
+-noindex
+-notree
+-nohelp
+-nonavbar
+-source
+17
+-classpath
+D:\DOWNLOADS\lib\greenfoot.jar;D:\DOWNLOADS\lib\javafx-base-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-base-20.0.1.jar;D:\DOWNLOADS\lib\javafx-controls-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-controls-20.0.1.jar;D:\DOWNLOADS\lib\javafx-fxml-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-graphics-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-graphics-20.0.1.jar;D:\DOWNLOADS\lib\javafx-media-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-media-20.0.1.jar;D:\DOWNLOADS\lib\javafx-swing-20.0.1-win.jar;D:\DOWNLOADS\lib\javafx-web-20.0.1-win.jar;D:\DOWNLOADS\lib\junit-4.12.jar;D:\DOWNLOADS\lib\junit-jupiter-5.5.2.jar;D:\DOWNLOADS\lib\junit-jupiter-api-5.5.2.jar;D:\DOWNLOADS\lib\junit-jupiter-engine-5.5.2.jar;D:\DOWNLOADS\lib\junit-jupiter-params-5.5.2.jar;D:\DOWNLOADS\lib\junit-platform-commons-1.5.2.jar;D:\DOWNLOADS\lib\junit-platform-engine-1.5.2.jar;D:\DOWNLOADS\lib\junit-platform-launcher-1.5.2.jar;D:\DOWNLOADS\lib\junit-platform-suite-api-1.5.2.jar;D:\DOWNLOADS\lib\junit-vintage-engine-5.5.2.jar;D:\DOWNLOADS\lib\hamcrest-core-1.3.jar;D:\DOWNLOADS\lib\opentest4j-1.2.0.jar;D:\DOWNLOADS\lib\bluej.jar;D:\DOWNLOADS\lib\classgraph-4.8.90.jar;D:\DOWNLOADS\lib\diffutils-1.2.1.jar;D:\DOWNLOADS\lib\commons-logging-1.2.jar;D:\DOWNLOADS\lib\jl1.0.1.jar;D:\DOWNLOADS\lib\opencsv-2.3.jar;D:\DOWNLOADS\lib\opencsv-2.4.jar;D:\DOWNLOADS\lib\xom-1.3.7.jar;D:\DOWNLOADS\lib\lang-stride.jar;D:\DOWNLOADS\lib\nsmenufx-2.1.8.jar;D:\DOWNLOADS\lib\wellbehavedfx-0.3.3.jar;D:\DOWNLOADS\lib\guava-17.0.jar;D:\DOWNLOADS\lib\simple-png-0.2.0.jar;D:\DOWNLOADS\lib\simple-png-javafx-0.2.0.jar;D:\DOWNLOADS\lib\httpclient-4.5.13.jar;D:\DOWNLOADS\lib\httpcore-4.4.13.jar;D:\DOWNLOADS\lib\httpmime-4.1.1.jar;D:\DOWNLOADS\lib\javafx\javafx.base.jar;D:\DOWNLOADS\lib\javafx\javafx.controls.jar;D:\DOWNLOADS\lib\javafx\javafx.fxml.jar;D:\DOWNLOADS\lib\javafx\javafx.graphics.jar;D:\DOWNLOADS\lib\javafx\javafx.media.jar;D:\DOWNLOADS\lib\javafx\javafx.properties.jar;D:\DOWNLOADS\lib\javafx\javafx.swing.jar;D:\DOWNLOADS\lib\javafx\javafx.web.jar;D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed
+-d
+D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\doc
+-encoding
+UTF-8
+-charset
+UTF-8
+D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\Player.java
+<---- end of javadoc command ---->
+Loading source file D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\Player.java...
+Constructing Javadoc information...
+warning: unknown enum constant Tag.Any
+  reason: class file for threadchecker.Tag not found
+warning: unknown enum constant Tag.Any
+Standard Doclet version 17.0.4.1+1
+Building tree for all the packages and classes...
+Generating D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\doc\Player.html...
+Generating D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\doc\package-summary.html...
+Generating D:\WINTER 2024\Game Prog\ForgottenTeamProject\ForgottenMajeed\doc\index.html...
+2 warnings
