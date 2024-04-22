@@ -89,8 +89,8 @@ public class Player extends Actor
     }
     private void checkBottom() {
         if (getY() >= getWorld().getHeight() - getImage().getHeight() / 2) {
-            setLocation(initialX, initialY); 
-            vertSpeed = 0; 
+            GameOver gameOver = new GameOver();
+            Greenfoot.setWorld(gameOver);
         }
     }
 }
