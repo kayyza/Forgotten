@@ -14,12 +14,16 @@ public class Player extends Moving
     private boolean isFalling;
     private boolean isSprinting;
     private boolean isOnGround;
+    private boolean hasLevelGem;
     
     private int initialX;
     private int initialY;
     
-    private int acceleration;
-    private int jumpHeight;
+    private double acceleration;
+    private double health;
+    private double jumpHeight;
+    private int height;
+    private int width;
     private int horzSpeed;
     private int vertSpeed;
 /**
@@ -33,10 +37,14 @@ public class Player extends Moving
         isFalling = true;
         isSprinting = false;
         isOnGround = false;
+        hasLevelGem = false;
         
         
         acceleration = 1;
+        health = 3;
         jumpHeight = -image.getHeight();
+        height = image.getHeight();
+        width = image.getWidth();
         vertSpeed = 1;
         horzSpeed = 3;
     }
@@ -57,12 +65,13 @@ public class Player extends Moving
     public void moveAround(){
         MyWorld myWorld = (MyWorld) getWorld();
         
-        
         if(Greenfoot.isKeyDown("shift")) {
             isSprinting = true;
+            acceleration = 1.5;
             horzSpeed = 5;
         } else {
             isSprinting = false;
+            acceleration = 1.25;
             horzSpeed = 3;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
@@ -85,9 +94,10 @@ public class Player extends Moving
         {
             if(Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("space"))
             {
-                vertSpeed = (jumpHeight / 3 ) / (acceleration * acceleration);
+                crouch();
+                vertSpeed = (int) (jumpHeight * acceleration / 4);
+                standUp();
                 fall();
-            
             }
             if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")) {
                 crouch();
@@ -123,8 +133,7 @@ public class Player extends Moving
      
     private void crouch() {
         if (!isCrouching) {
-            GreenfootImage image = getImage();
-            image.scale(image.getWidth(), image.getHeight() / 2);
+            image.scale(width, height / 2);
             setImage(image);
             isCrouching = true;
         }
@@ -132,8 +141,7 @@ public class Player extends Moving
     
     private void standUp() {
         if (isCrouching) {
-            GreenfootImage image = getImage();
-            image.scale(image.getWidth(), image.getHeight() * 2);
+            image.scale(width, height);
             setImage(image);
             isCrouching = false;
         }

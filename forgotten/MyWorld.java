@@ -14,22 +14,24 @@ public class MyWorld extends World
      * 
      */
     
-    private int HEIGHT = getHeight();
-    private int WIDTH = getWidth();
-    private static double GRAVITY;
-    private Actor clone = new Sky();
+    public static int HEIGHT;
+    public static int WIDTH;
     
-    
+    private int LEVEL;
     
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(768, 512, 1);
-        
-        GRAVITY = 9.807; 
+        super(768, 512, 1, false);
+         
+        HEIGHT = getHeight();
+        WIDTH = getWidth();
+        LEVEL = 1;
+    
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);
         bg.fill();
+        
         prepare();
     }
     
@@ -41,34 +43,77 @@ public class MyWorld extends World
     private void prepare()
     {
         generateGrid();
-        generateBG();
        
         // Generate sky panels:
         for (int i = 0; i < 12000; i+=60) {
-            addObject(new Sky(), +i, 266);
+            //addObject(new Sky(), +i, 266);
         }
         
-        // Generate tall Grass:
-        int platLen1 = 4;
-        int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,14); 
+        if (LEVEL == 0) {
+
+            //Greenfoot.setWorld(new Level0());
+            // Generate tall Grass:
+            int platLen1 = 10;
+            int platPos1 = 0;
+            generatePlatform(platPos1, platLen1,14); 
         
-        int platLen2 = 2;
-        int platPos2 = 6;
-        generatePlatform(platPos2, platLen2,15); 
+            int platLen2 = 4;
+            int platPos2 = 12;
+            generatePlatform(platPos2, platLen2,14); 
         
-        int platLen3 = 3;
-        int platPos3 = 10;
-        generatePlatform(platPos3, platLen3, 12); 
+            int platLen3 = 30;
+            int platPos3 = 18;
+            generatePlatform(platPos3, platLen3, 13); 
         
-        int platLen4 = 16;
-        int platPos4 = 14;
-        generatePlatform(platPos4, platLen4,14); 
+            //int platLen4 = 16;
+            //int platPos4 = 14;
+            //generatePlatform(platPos4, platLen4,14); 
         
-        Player player = new Player();
-        addObject(player, 80, HEIGHT - 26 - 88);        
+            Player player = new Player();
+            addObject(player, 80, MyWorld.HEIGHT - 26 - 88); 
+            if(player.getX() >= MyWorld.WIDTH) {
+                LEVEL += 1;
+            }
+        }
+        if  (LEVEL == 1) {
+            int platLen1 = 4;
+            int platPos1 = 0;
+            generatePlatform(platPos1, platLen1,13); 
         
-  }
+            int platLen2 = 3;
+            int platPos2 = 6;
+            generatePlatform(platPos2, platLen2,15); 
+            
+            int platLen3 = 2;
+            int platPos3 = 10;
+            generateFloatPlatform(platPos3, platLen3, 13);
+        
+            int platLen4 = 2;
+            int platPos4 = 14;
+            generateFloatPlatform(platPos4, platLen4, 11);
+            
+            int platLen5 = 4;
+            int platPos5 = 7;
+            generateFloatPlatform(platPos5, platLen5, 9);
+            
+            int platLen6 = 3;
+            int platPos6 = 1;
+            generateFloatPlatform(platPos6, platLen6, 6);
+            
+            int platLen7 = 6;
+            int platPos7 = 19;
+            generatePlatform(platPos7, platLen7,14);
+            
+            LevelGem levelGem = new LevelGem();
+            addObject(levelGem, (32*2 + 16),(32*5));
+            
+            Portal portal = new Portal();
+            addObject(portal, (32*22), (32*12));
+            
+            Player player = new Player();
+            addObject(player, 0, MyWorld.HEIGHT - 142); 
+        }
+    }
     
     public void generatePlatform(int x, int length, int y) {
         int blockSize = 32;
@@ -85,6 +130,15 @@ public class MyWorld extends World
                 }
             }
         
+        }
+    }
+    
+    public void generateFloatPlatform(int x, int length, int y) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        y = 16 + (blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=blockSize) {
+            addObject(new Grass(), i, y);
         }
     }
     
@@ -107,15 +161,5 @@ public class MyWorld extends World
             GreenfootImage coord = new GreenfootImage("" + i + j, 12, Color.WHITE, Color.BLACK);
             }
         }
-    }
-        
-    public void generateBG()
-    {
-        GreenfootImage bg = new GreenfootImage(1,1);
-    }
-    
-    public static double getGravity()
-    {
-        return GRAVITY;
     }
 }

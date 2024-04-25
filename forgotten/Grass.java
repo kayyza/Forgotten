@@ -6,7 +6,7 @@ public class Grass extends NonMoving
     {
         // getImage().scale(getImage().getWidth()*3,getImage().getHeight()/2);
     }
-public void act()
+    public void act()
     {
         move();
     }
@@ -14,10 +14,10 @@ public void act()
     public void move() {
         int horzSpeed;
         if(Greenfoot.isKeyDown("shift")) {
-            horzSpeed = -3;
+            horzSpeed = -2;
         } else {
 
-            horzSpeed = -2;
+            horzSpeed = -1;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {
