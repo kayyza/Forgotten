@@ -20,7 +20,16 @@ public class Player extends Moving
     private int width;
     private int horzSpeed;
     private int vertSpeed;
+<<<<<<< HEAD
 
+=======
+    private int leftKeyPressCount;
+    private int rightKeyPressCount;
+/**
+     * Act - do whatever the Player wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+>>>>>>> 4dd78821ca0b4968f43e83342f5cc3baffa82edd
      public Player() {
         image = getImage();
         isImageFlipped = false;
@@ -37,6 +46,9 @@ public class Player extends Moving
         width = image.getWidth();
         vertSpeed = 1;
         horzSpeed = 3;
+        
+        leftKeyPressCount = 0;
+        rightKeyPressCount = 0;
     }
     
     public void act(){
@@ -71,6 +83,12 @@ public class Player extends Moving
                 getImage().mirrorHorizontally();
                 isImageFlipped = false;
             }
+            if (rightKeyPressCount == 25) {
+            Greenfoot.playSound("grassStep.wav");
+            rightKeyPressCount = 0;
+            } else {
+            rightKeyPressCount++;
+            }
         }
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a"))
         {
@@ -78,6 +96,12 @@ public class Player extends Moving
             if (!isImageFlipped) {
                 getImage().mirrorHorizontally();
                 isImageFlipped = true;
+            }
+             if (leftKeyPressCount == 25) {
+            Greenfoot.playSound("grassStep.wav");
+            leftKeyPressCount = 0;
+            } else {
+            leftKeyPressCount++;
             }
         }
         if (onGround() == true)
@@ -88,6 +112,7 @@ public class Player extends Moving
                 vertSpeed = (int) (jumpHeight * acceleration / 4);
                 standUp();
                 fall();
+                Greenfoot.playSound("jump_11.wav");
             }
             if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")) {
                 crouch();
