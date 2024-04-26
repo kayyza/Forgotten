@@ -1,11 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Player here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Player extends Moving
 {
     private GreenfootImage image;
@@ -26,10 +20,7 @@ public class Player extends Moving
     private int width;
     private int horzSpeed;
     private int vertSpeed;
-/**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+
      public Player() {
         image = getImage();
         isImageFlipped = false;
@@ -38,7 +29,6 @@ public class Player extends Moving
         isSprinting = false;
         isOnGround = false;
         hasLevelGem = false;
-        
         
         acceleration = 1;
         health = 3;
@@ -53,13 +43,13 @@ public class Player extends Moving
         moveAround();
         checkFalling();
         checkBottom();
+        hitGem();
+        hitPortal();
     }
     
     public void addedToWorld(World world) {
         initialX = getX();
         initialY = getY();
-        
-         
     }
     
     public void moveAround(){
@@ -153,4 +143,23 @@ public class Player extends Moving
             vertSpeed = 0; 
         }
     }
+    private void hitGem() {
+        Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
+        if (getOneIntersectingObject(LevelGem.class) != null) {
+            getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
+            hasLevelGem = true;
+            portal.setImage("lift-open.png");
+        } 
+    }
+    
+    private void hitPortal() {
+        if  (Greenfoot.isKeyDown("e")) {
+            //MyWorld.LEVEL++;
+            if ( MyWorld.LEVEL == 0) {
+                MyWorld.LEVEL++;
+                Greenfoot.setWorld(new Level1());
+            }
+        }
+    }
+    
 }

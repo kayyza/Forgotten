@@ -1,23 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**import java.util.ArrayList;
- * Write a description of class MyWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class MyWorld extends World
 {
-
-    /**
-     * Constructor for objects of class MyWorld.
-     * 
-     */
-    
     public static int HEIGHT;
     public static int WIDTH;
-    
-    private int LEVEL;
+    public static int LEVEL;
     
     public MyWorld()
     {    
@@ -26,7 +13,7 @@ public class MyWorld extends World
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
-        LEVEL = 1;
+        LEVEL = 0;
     
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);
@@ -42,76 +29,29 @@ public class MyWorld extends World
     
     private void prepare()
     {
+        
         generateGrid();
-       
         // Generate sky panels:
         for (int i = 0; i < 12000; i+=60) {
             //addObject(new Sky(), +i, 266);
         }
         
-        if (LEVEL == 0) {
-
-            //Greenfoot.setWorld(new Level0());
-            // Generate tall Grass:
-            int platLen1 = 10;
+        //changeWorld();        
+        // Since the code isn't working, I'm just going to hardcode it for now...
+        if  (LEVEL == 0) {
+            int platLen1 = 24;
             int platPos1 = 0;
-            generatePlatform(platPos1, platLen1,14); 
-        
-            int platLen2 = 4;
-            int platPos2 = 12;
-            generatePlatform(platPos2, platLen2,14); 
-        
-            int platLen3 = 30;
-            int platPos3 = 18;
-            generatePlatform(platPos3, platLen3, 13); 
-        
-            //int platLen4 = 16;
-            //int platPos4 = 14;
-            //generatePlatform(platPos4, platLen4,14); 
-        
-            Player player = new Player();
-            addObject(player, 80, MyWorld.HEIGHT - 26 - 88); 
-            if(player.getX() >= MyWorld.WIDTH) {
-                LEVEL += 1;
-            }
-        }
-        if  (LEVEL == 1) {
-            int platLen1 = 4;
-            int platPos1 = 0;
-            generatePlatform(platPos1, platLen1,13); 
-        
-            int platLen2 = 3;
-            int platPos2 = 6;
-            generatePlatform(platPos2, platLen2,15); 
-            
-            int platLen3 = 2;
-            int platPos3 = 10;
-            generateFloatPlatform(platPos3, platLen3, 13);
-        
-            int platLen4 = 2;
-            int platPos4 = 14;
-            generateFloatPlatform(platPos4, platLen4, 11);
-            
-            int platLen5 = 4;
-            int platPos5 = 7;
-            generateFloatPlatform(platPos5, platLen5, 9);
-            
-            int platLen6 = 3;
-            int platPos6 = 1;
-            generateFloatPlatform(platPos6, platLen6, 6);
-            
-            int platLen7 = 6;
-            int platPos7 = 19;
-            generatePlatform(platPos7, platLen7,14);
+            generatePlatform(platPos1, platLen1,13);
             
             LevelGem levelGem = new LevelGem();
-            addObject(levelGem, (32*2 + 16),(32*5));
-            
+            addObject(levelGem, (32*13 - 4),(32*10));
+                
             Portal portal = new Portal();
-            addObject(portal, (32*22), (32*12));
+            addObject(portal, (32*22), (32*11));
             
+                
             Player player = new Player();
-            addObject(player, 0, MyWorld.HEIGHT - 142); 
+            addObject(player, 0, MyWorld.HEIGHT - 142);
         }
     }
     
@@ -144,8 +84,6 @@ public class MyWorld extends World
     
     public void generateGrid()
     {
-        
-        
         GreenfootImage col = new GreenfootImage(1, HEIGHT);
         col.setColor(Color.BLACK);
         col.fillRect(0, 0, 1, WIDTH);
@@ -161,5 +99,24 @@ public class MyWorld extends World
             GreenfootImage coord = new GreenfootImage("" + i + j, 12, Color.WHITE, Color.BLACK);
             }
         }
+    }
+    
+    //Code isn't working :((
+    public void changeWorld() {
+        if  (LEVEL == -1) {
+            Greenfoot.setWorld(new StartScreen());
+        }
+        if (LEVEL == 0) {
+            Greenfoot.setWorld(new Level0());
+        }
+        if (LEVEL == 1) { 
+            Greenfoot.setWorld(new Level1());
+        }
+        /*switch(LEVEL) {
+            case -1 : Greenfoot.setWorld(new StartScreen()); 
+            case 0 : Greenfoot.setWorld(new Level0()); 
+            case 1: Greenfoot.setWorld(new Level1()); 
+            
+        }*/
     }
 }
