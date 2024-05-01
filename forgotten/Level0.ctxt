@@ -1,9 +1,15 @@
 #BlueJ class context
 comment0.target=Level0
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ level0\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Level0()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ level0.\r\n\ \r\n
 comment2.params=
 comment2.target=void\ prepare()
-numComments=3
+comment3.params=
+comment3.target=void\ generateSky()
+comment4.params=x\ length\ y
+comment4.target=void\ generatePlatform(int,\ int,\ int)
+comment5.params=x\ length\ y
+comment5.target=void\ generateFloatPlatform(int,\ int,\ int)
+comment6.params=
+comment6.target=void\ generateGrid()
+numComments=7

@@ -14,26 +14,6 @@ public class NonMoving extends Actor
      */
     public void act()
     {
-        move();
-    }
-    
-    public void move() {
-        int horzSpeed;
-        if(Greenfoot.isKeyDown("shift")) {
-            horzSpeed = -2;
-        } else {
-
-            horzSpeed = -1;
-        }
-        if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
-        {
-            move(horzSpeed);
-        }
-        if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a"))
-        {
-            move(-horzSpeed);    
-
-        }
-        
+        // Add your action code here.
     }
 }

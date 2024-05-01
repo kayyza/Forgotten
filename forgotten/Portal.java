@@ -1,18 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Portal here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Portal extends NonMoving
 {
-    /**
-     * Act - do whatever the Portal wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act()
+       public void act()
     {
         move();
     }
@@ -20,10 +10,11 @@ public class Portal extends NonMoving
     public void move() {
         int horzSpeed;
         if(Greenfoot.isKeyDown("shift")) {
-            horzSpeed = -2;
+            //horzSpeed = -2;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -2;
         } else {
-
-            horzSpeed = -1;
+            //horzSpeed = -1;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -1;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {
@@ -33,6 +24,6 @@ public class Portal extends NonMoving
         {
             move(-horzSpeed);    
         }
-
+        
     }
 }

@@ -2,6 +2,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class MyWorld extends World
 {
+    SimpleTimer time = new SimpleTimer();
+    Counter timeCount = new Counter();
+
     public static int HEIGHT;
     public static int WIDTH;
     public static int LEVEL;
@@ -10,6 +13,9 @@ public class MyWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(768, 512, 1, false);
+        
+        addObject(timeCount, getWidth() / 2, getHeight() / 2);
+        time.mark();
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
@@ -25,34 +31,12 @@ public class MyWorld extends World
     public void act()
     {
         super.act();
+        timeCount.setValue(time.millisElapsed() / 1000);
     }
     
     private void prepare()
     {
-        
-        generateGrid();
-        // Generate sky panels:
-        for (int i = 0; i < 12000; i+=60) {
-            //addObject(new Sky(), +i, 266);
-        }
-        
-        //changeWorld();        
-        // Since the code isn't working, I'm just going to hardcode it for now...
-        if  (LEVEL == 0) {
-            int platLen1 = 24;
-            int platPos1 = 0;
-            generatePlatform(platPos1, platLen1,13);
-            
-            LevelGem levelGem = new LevelGem();
-            addObject(levelGem, (32*13 - 4),(32*10));
-                
-            Portal portal = new Portal();
-            addObject(portal, (32*22), (32*11));
-            
-                
-            Player player = new Player();
-            addObject(player, 0, MyWorld.HEIGHT - 142);
-        }
+        changeWorld();
     }
     
     public void generatePlatform(int x, int length, int y) {
@@ -101,22 +85,15 @@ public class MyWorld extends World
         }
     }
     
-    //Code isn't working :((
-    public void changeWorld() {
-        if  (LEVEL == -1) {
-            Greenfoot.setWorld(new StartScreen());
+    public static void changeWorld() {
+        switch(LEVEL) {
+            case -2 : Greenfoot.setWorld(new SplashScreen()); break;
+            case -1 : Greenfoot.setWorld(new StartScreen()); break;
+            case 0 : Greenfoot.setWorld(new Level0()); break;
+            case 1 : Greenfoot.setWorld(new Level1()); break;
+            case 2 : Greenfoot.setWorld(new Level2()); break;
+            case 3 : Greenfoot.setWorld(new Level3()); break;
+            default: Greenfoot.setWorld(new StartScreen()); 
         }
-        if (LEVEL == 0) {
-            Greenfoot.setWorld(new Level0());
-        }
-        if (LEVEL == 1) { 
-            Greenfoot.setWorld(new Level1());
-        }
-        /*switch(LEVEL) {
-            case -1 : Greenfoot.setWorld(new StartScreen()); 
-            case 0 : Greenfoot.setWorld(new Level0()); 
-            case 1: Greenfoot.setWorld(new Level1()); 
-            
-        }*/
     }
 }

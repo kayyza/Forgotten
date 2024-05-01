@@ -1,13 +1,29 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class TallGrass here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class TallGrass extends NonMoving
-{    
+{
+    public TallGrass()
+    {
+        int rand = Greenfoot.getRandomNumber(333);
+        boolean isFlipped = false;
+
+       /* for (int i = 0; i < 12000; i+=60) {
+            if (rand % 2 == 0) {
+                if (!isFlipped) {
+                    getImage().mirrorHorizontally();
+                    isFlipped = true;
+                }
+            } else {
+                if (isFlipped) {
+                    getImage().mirrorHorizontally();
+                    isFlipped = false;
+                }
+            }
+            rand = Greenfoot.getRandomNumber(333);
+        }*/
+        
+    }
+    
     public void act()
     {
         move();
@@ -16,10 +32,11 @@ public class TallGrass extends NonMoving
     public void move() {
         int horzSpeed;
         if(Greenfoot.isKeyDown("shift")) {
-            horzSpeed = -2;
+            //horzSpeed = -2;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -2;
         } else {
-
-            horzSpeed = -1;
+            //horzSpeed = -1;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -1;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {

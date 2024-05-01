@@ -2,10 +2,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Grass extends NonMoving
 {
-    public Grass() 
+    public Grass()
     {
-        // getImage().scale(getImage().getWidth()*3,getImage().getHeight()/2);
     }
+    
     public void act()
     {
         move();
@@ -14,10 +14,11 @@ public class Grass extends NonMoving
     public void move() {
         int horzSpeed;
         if(Greenfoot.isKeyDown("shift")) {
-            horzSpeed = -2;
+            //horzSpeed = -2;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -2;
         } else {
-
-            horzSpeed = -1;
+            //horzSpeed = -1;
+            horzSpeed = (MyWorld.LEVEL == 0) ? 0 : -1;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {
@@ -27,6 +28,6 @@ public class Grass extends NonMoving
         {
             move(-horzSpeed);    
         }
-
+        
     }
 }

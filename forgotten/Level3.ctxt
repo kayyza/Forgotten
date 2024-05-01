@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Level3
+comment1.params=
+comment1.target=Level3()
+comment2.params=
+comment2.target=void\ prepare()
+comment3.params=
+comment3.target=void\ generateSky()
+comment4.params=x\ length\ y
+comment4.target=void\ generatePlatform(int,\ int,\ int)
+comment5.params=x\ length\ y
+comment5.target=void\ generateFloatPlatform(int,\ int,\ int)
+numComments=6

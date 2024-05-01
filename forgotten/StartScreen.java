@@ -1,19 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class StartScreen here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class StartScreen extends MyWorld
+public class StartScreen extends World
 {
-
-    /**
-     * Constructor for objects of class StartScreen.
-     * 
-     */
     public StartScreen()
-    {
+    {    
+        super(768, 512, 1, false); 
+        showText("START SCREEN", 32*10, 32*6);
     }
 }

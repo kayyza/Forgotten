@@ -1,60 +1,82 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class level0 here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Level1 extends MyWorld
+public class Level1 extends World
 {
-
-    /**
-     * Constructor for objects of class level0.
-     * 
-     */
     public Level1()
-    {
-        prepare();
+    {    
+        super(768, 512, 1, false); 
+        showText("LEVEL 1", 32*2, 32*2);
+        generateSky();
+         prepare();
     }
-    public void prepare() {
-        int platLen1 = 4;
+        
+    public void prepare() {    
+        int platLen4 = 4;
+        int platPos4 = 13;
+        generatePlatform(platPos4, platLen4, 14);
+        
+        int platLen3 = 3;
+        int platPos3 = 8;
+        generatePlatform(platPos3, platLen3, 15);
+        
+        int platLen2 = 10;
+        int platPos2 = 17;
+        generatePlatform(platPos2, platLen2,13); 
+        
+        int platLen1 = 6;
         int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,13); 
-    
-        int platLen2 = 3;
-        int platPos2 = 6;
-        generatePlatform(platPos2, platLen2,15); 
-            
-        int platLen3 = 2;
-        int platPos3 = 10;
-        generateFloatPlatform(platPos3, platLen3, 13);
+        generatePlatform(platPos1, platLen1,14); 
         
-        int platLen4 = 2;
-        int platPos4 = 14;
-        generateFloatPlatform(platPos4, platLen4, 11);
-            
-        int platLen5 = 4;
-        int platPos5 = 7;
-        generateFloatPlatform(platPos5, platLen5, 9);
-            
-        int platLen6 = 3;
-        int platPos6 = 1;
-        generateFloatPlatform(platPos6, platLen6, 6);
-            
-        int platLen7 = 6;
-        int platPos7 = 19;
-        generatePlatform(platPos7, platLen7,14);
-            
-        LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*2 + 16),(32*5));
-            
         Portal portal = new Portal();
-        addObject(portal, (32*22), (32*12));
-        
+        addObject(portal, (32*20)-16, (32*11));
+               
+        LevelGem levelGem = new LevelGem();
+        addObject(levelGem, (32*10) - 16,(32*11));
             
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142);
+        addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
+    }   
+    
+    public void generateSky() {
+        int rand = Greenfoot.getRandomNumber(333);
+
+        for (int i = 0; i < 12000; i+=60) {
+            if (rand % 3 == 0) { 
+                addObject(new Sky3(), +i, 266);
+            } else if (rand % 2 == 0) {
+                addObject(new Sky2(), +i, 266);
+            } else {
+                addObject(new Sky1(), +i, 266);
+            }
+            
+            rand = Greenfoot.getRandomNumber(333);
+        }
     }
     
+    public void generatePlatform(int x, int length, int y) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        y = 16 + (blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=blockSize) {
+            addObject(new TallGrass(), i, y - 16);
+            addObject(new Dirt(), i, y + blockSize );
+            if((y / blockSize) < 14) {
+                int depth = 14 - (y / blockSize);
+
+                for (int d=0; d < depth*2; d++){
+                    addObject(new Dirt(), i, y + blockSize + (blockSize*d) );
+                }
+            }
+        
+        }
+    }
+    
+    public void generateFloatPlatform(int x, int length, int y) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        y = 16 + (blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=blockSize) {
+            addObject(new Grass(), i, y);
+        }
+    }
 }

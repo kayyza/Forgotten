@@ -2,13 +2,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Player extends Moving
 {
-    private GreenfootImage image;
+    GifImage runAnimation;
+    GreenfootImage image;
+    
     private boolean isImageFlipped;
     private boolean isCrouching;
     private boolean isFalling;
     private boolean isSprinting;
-    private boolean isOnGround;
+    private boolean onGround;
     private boolean hasLevelGem;
+    private boolean isPortalOpen;
     
     private int initialX;
     private int initialY;
@@ -16,34 +19,31 @@ public class Player extends Moving
     private double acceleration;
     private double health;
     private double jumpHeight;
+    
     private int height;
     private int width;
     private int horzSpeed;
     private int vertSpeed;
-<<<<<<< HEAD
-
-=======
+    
     private int leftKeyPressCount;
     private int rightKeyPressCount;
-/**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
->>>>>>> 4dd78821ca0b4968f43e83342f5cc3baffa82edd
-     public Player() {
-        image = getImage();
+    
+    public Player()
+    {
+        runAnimation = new GifImage("run_animation.gif");
         isImageFlipped = false;
         isCrouching = false;
         isFalling = true;
         isSprinting = false;
-        isOnGround = false;
+        onGround = false;
         hasLevelGem = false;
+        isPortalOpen =  false;
         
         acceleration = 1;
         health = 3;
-        jumpHeight = -image.getHeight();
-        height = image.getHeight();
-        width = image.getWidth();
+        jumpHeight = -32;
+        height = 36;
+        width = 43;
         vertSpeed = 1;
         horzSpeed = 3;
         
@@ -51,7 +51,15 @@ public class Player extends Moving
         rightKeyPressCount = 0;
     }
     
-    public void act(){
+    public void act()
+    {
+        //move(5);
+        if (image != null) {
+            image = runAnimation.getCurrentImage();
+            image.scale(width,height);
+            setImage(image);
+        }
+        
         moveAround();
         checkFalling();
         checkBottom();
@@ -65,8 +73,6 @@ public class Player extends Moving
     }
     
     public void moveAround(){
-        MyWorld myWorld = (MyWorld) getWorld();
-        
         if(Greenfoot.isKeyDown("shift")) {
             isSprinting = true;
             acceleration = 1.5;
@@ -84,7 +90,9 @@ public class Player extends Moving
                 isImageFlipped = false;
             }
             if (rightKeyPressCount == 25) {
-            Greenfoot.playSound("grassStep.wav");
+            //  I accidentally removed the grassStep sound file from the folder, so it bugs now ;;
+            // (If someone can fix this, or send me the sound file so I can fix it that would be great!!) 
+            //Greenfoot.playSound("grassStep.wav");
             rightKeyPressCount = 0;
             } else {
             rightKeyPressCount++;
@@ -98,7 +106,7 @@ public class Player extends Moving
                 isImageFlipped = true;
             }
              if (leftKeyPressCount == 25) {
-            Greenfoot.playSound("grassStep.wav");
+            //Greenfoot.playSound("grassStep.wav");
             leftKeyPressCount = 0;
             } else {
             leftKeyPressCount++;
@@ -112,7 +120,7 @@ public class Player extends Moving
                 vertSpeed = (int) (jumpHeight * acceleration / 4);
                 standUp();
                 fall();
-                Greenfoot.playSound("jump_11.wav");
+                //Greenfoot.playSound("jump_11.wav");
             }
             if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")) {
                 crouch();
@@ -123,68 +131,77 @@ public class Player extends Moving
         
     }
     
-      private void fall(){
+    private void fall() {
         setLocation(getX(), getY() + vertSpeed);
         vertSpeed++;
     }
     
-    boolean onGround(){
-        Actor under1 = getOneObjectAtOffset(0, getImage().getHeight()/2, TallGrass.class);
-        Actor under2 = getOneObjectAtOffset(0, getImage().getHeight()/2, Grass.class);
-        Actor under3 = getOneObjectAtOffset(0, getImage().getHeight()/2, Dirt.class); 
-        
-        // return actor is not equal to null, meaning actor.. is falling???
+    private boolean onGround() {
+        Actor under1 = getOneObjectAtOffset(0, 32/2, TallGrass.class);
+        Actor under2 = getOneObjectAtOffset(0, 32/2, Grass.class);
+        Actor under3 = getOneObjectAtOffset(0, 32/2, Dirt.class); 
+
         return (under1 != null || under2 != null || under3 != null);
     }
     
-    private void checkFalling(){
-        if (onGround() == false){
+    private void checkFalling() {
+        if (!onGround()) {
             isFalling = true;
             fall();
         } else {
             isFalling = false;
         }
     }
-     
+    
     private void crouch() {
         if (!isCrouching) {
-            image.scale(width, height / 2);
-            setImage(image);
-            isCrouching = true;
+            if (image != null) {
+                image.scale(width, height/2);
+                setImage(image);
+                isCrouching = true;
+            }
         }
     }
     
     private void standUp() {
         if (isCrouching) {
-            image.scale(width, height);
-            setImage(image);
-            isCrouching = false;
+            if(image != null) {
+                image.scale(width, height);
+                setImage(image);
+                isCrouching = false;
+            }
         }
     }
     
     private void checkBottom() {
-        if (getY() >= getWorld().getHeight() - getImage().getHeight() / 2) {
-            setLocation(initialX, initialY); 
-            vertSpeed = 0; 
+        if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
+            setLocation(initialX, initialY);
+            vertSpeed = 0;
         }
     }
+    
     private void hitGem() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
+        
         if (getOneIntersectingObject(LevelGem.class) != null) {
             getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
             hasLevelGem = true;
+            isPortalOpen = true;
             portal.setImage("lift-open.png");
         } 
     }
     
     private void hitPortal() {
-        if  (Greenfoot.isKeyDown("e")) {
-            //MyWorld.LEVEL++;
-            if ( MyWorld.LEVEL == 0) {
-                MyWorld.LEVEL++;
+        Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
+            
+            if(getOneIntersectingObject(Portal.class) != null) {
+            if (MyWorld.LEVEL == 0) {
+                MyWorld.LEVEL = 1;
                 Greenfoot.setWorld(new Level1());
+            } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e")) {
+                MyWorld.LEVEL++;
+                MyWorld.changeWorld();        
             }
         }
     }
-    
 }
