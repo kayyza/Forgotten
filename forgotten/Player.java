@@ -41,7 +41,7 @@ public class Player extends Moving
         
         acceleration = 1;
         health = 3;
-        jumpHeight = -32;
+        jumpHeight = -44;
         height = 36;
         width = 43;
         vertSpeed = 1;
