@@ -1,9 +1,14 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class TallGrass extends NonMoving
+public class Tree1 extends NonMoving
 {
-    public TallGrass()
-    {
+    private GreenfootImage image;
+    
+    public Tree1() {
+        image = getImage();
+        image.scale(image.getWidth()*2, image.getHeight()*2);
+        setImage(image);
+        
         int rand = Greenfoot.getRandomNumber(333);
         boolean isFlipped = false;
 
@@ -21,7 +26,6 @@ public class TallGrass extends NonMoving
             }
             rand = Greenfoot.getRandomNumber(333);
         }
-        
     }
     
     public void act()

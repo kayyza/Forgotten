@@ -25,6 +25,8 @@ public class MyWorld extends World
         bg.setColor(Color.LIGHT_GRAY);
         bg.fill();
         
+        
+        
         prepare();
     }
     
@@ -93,7 +95,7 @@ public class MyWorld extends World
             case 1 : Greenfoot.setWorld(new Level1()); break;
             case 2 : Greenfoot.setWorld(new Level2()); break;
             case 3 : Greenfoot.setWorld(new Level3()); break;
-            default: Greenfoot.setWorld(new StartScreen()); 
+            default: Greenfoot.setWorld(new SplashScreen()); 
         }
     }
 }

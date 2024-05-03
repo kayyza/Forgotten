@@ -6,21 +6,35 @@ public class Level0 extends World
     {    
         super(768, 512, 1, false); 
         showText("TUTORIAL", 32*2, 32*2);
+        showText("" + MyWorld.LEVEL, 32*2, 32*3);
         generateSky();
         prepare();
     }
         
-    public void prepare() {    
+    public void prepare() {        
+        int treesLen1 = 24;
+        int treesPos1 = 10;
+        int treesDis1 = 9;
+        generateTrees(treesPos1, treesLen1,8, treesDis1); 
+        
+        int treesLen2 = 24;
+        int treesPos2 = 16;
+        int treesDis2 = 6;
+        generateTrees(treesPos2, treesLen2,8, treesDis2);
+        
         int platLen1 = 24;
         int platPos1 = 0;
         generatePlatform(platPos1, platLen1,14); 
         
+        int treesLen3 = 24;
+        int treesPos3 = 20;
+        int treesDis3 = 3;
+        generateTrees(treesPos3, treesLen3,8, treesDis3);
+        
+        
         Portal portal = new Portal();
         addObject(portal, (32*25), (32*12));
-               
-        //LevelGem levelGem = new LevelGem();
-        //addObject(levelGem, (32*21),(32*10));
-            
+         
         Player player = new Player();
         addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
     }    
@@ -28,14 +42,13 @@ public class Level0 extends World
     public void generateSky() {
         int rand = Greenfoot.getRandomNumber(333);
 
-        for (int i = 0; i < 12000; i+=60) {
-            
+        for (int i = 0; i < 12000; i+=120) {
             if (rand % 3 == 0) { 
-                addObject(new Sky3(), +i, 266);
+                addObject(new Sky3(), +i, (32*8)+16);
             } else if (rand % 2 == 0) {
-                addObject(new Sky2(), +i, 266);
+                addObject(new Sky2(), +i, (32*8)+16);
             } else {
-                addObject(new Sky1(), +i, 266);
+                addObject(new Sky1(), +i, (32*8)+16);
             }
             
             rand = Greenfoot.getRandomNumber(333);
@@ -69,6 +82,24 @@ public class Level0 extends World
         }
     }
     
+    public void generateTrees(int x, int length, int y, int distance) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        int rand = Greenfoot.getRandomNumber(333);
+        boolean isFlipped = false;
+        y =(blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=(blockSize*distance)) {
+            if (rand % 2 == 0) {
+                    addObject(new Tree1(), i, y + blockSize - 16);
+                    rand = Greenfoot.getRandomNumber(333);
+                } else {
+                    addObject(new Tree2(), i, y + blockSize - blockSize/4);
+                    rand = Greenfoot.getRandomNumber(333);
+                }
+            rand = Greenfoot.getRandomNumber(333);
+        }
+    }
+    
     public void generateGrid()
     {
         GreenfootImage col = new GreenfootImage(1, MyWorld.HEIGHT);
@@ -87,5 +118,4 @@ public class Level0 extends World
             }
         }
     }
-    
 }

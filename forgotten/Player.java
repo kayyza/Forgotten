@@ -49,11 +49,11 @@ public class Player extends Moving
         
         leftKeyPressCount = 0;
         rightKeyPressCount = 0;
+        
     }
     
     public void act()
     {
-        //move(5);
         if (image != null) {
             image = runAnimation.getCurrentImage();
             image.scale(width,height);
