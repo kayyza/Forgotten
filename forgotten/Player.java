@@ -62,9 +62,9 @@ public class Player extends Moving
         
         moveAround();
         checkFalling();
-        checkBottom();
         hitGem();
         hitPortal();
+        checkEdges();
     }
     
     public void addedToWorld(World world) {
@@ -173,13 +173,6 @@ public class Player extends Moving
         }
     }
     
-    private void checkBottom() {
-        if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
-            setLocation(initialX, initialY);
-            vertSpeed = 0;
-        }
-    }
-    
     private void hitGem() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
         
@@ -202,6 +195,64 @@ public class Player extends Moving
                 MyWorld.LEVEL++;
                 MyWorld.changeWorld();        
             }
+        }
+    }
+    
+    private void checkEdges() {
+        // Left edge:
+        if (getX() >= MyWorld.WIDTH) {
+            setLocation(1, getY());
+            for (Object obj : getWorld().getObjects(TallGrass.class)) {
+                Actor tallGrass = (Actor) obj;
+                tallGrass.setLocation((tallGrass.getX() - MyWorld.WIDTH), tallGrass.getY());
+            }
+            for (Object obj : getWorld().getObjects(Grass.class)) {
+                Actor grass = (Actor) obj;
+                grass.setLocation((grass.getX() - MyWorld.WIDTH), grass.getY());
+            }
+            for (Object obj : getWorld().getObjects(Dirt.class)) {
+                Actor dirt = (Actor) obj;
+                dirt.setLocation((dirt.getX() - MyWorld.WIDTH), dirt.getY());
+            }
+            for (Object obj : getWorld().getObjects(LevelGem.class)) {
+                Actor levelGem = (Actor) obj;
+                levelGem.setLocation((levelGem.getX() - MyWorld.WIDTH), levelGem.getY());
+            }
+            for (Object obj : getWorld().getObjects(Portal.class)) {
+                Actor portal = (Actor) obj;
+                portal.setLocation((portal.getX() - MyWorld.WIDTH), portal.getY());
+            }
+        }
+        
+        // Right edge:
+        if (getX() < 0) {
+            setLocation(MyWorld.WIDTH, getY());
+            for (Object obj : getWorld().getObjects(TallGrass.class)) {
+                Actor tallGrass = (Actor) obj;
+                tallGrass.setLocation((tallGrass.getX() + MyWorld.WIDTH), tallGrass.getY());
+            }
+            for (Object obj : getWorld().getObjects(Grass.class)) {
+                Actor grass = (Actor) obj;
+                grass.setLocation((grass.getX() + MyWorld.WIDTH), grass.getY());
+            }
+            for (Object obj : getWorld().getObjects(Dirt.class)) {
+                Actor dirt = (Actor) obj;
+                dirt.setLocation((dirt.getX() + MyWorld.WIDTH), dirt.getY());
+            }
+            for (Object obj : getWorld().getObjects(LevelGem.class)) {
+                Actor levelGem = (Actor) obj;
+                levelGem.setLocation((levelGem.getX() + MyWorld.WIDTH), levelGem.getY());
+            }
+            for (Object obj : getWorld().getObjects(Portal.class)) {
+                Actor portal = (Actor) obj;
+                portal.setLocation((portal.getX() + MyWorld.WIDTH), portal.getY());
+            }
+        }
+        
+        // Bottom edge:
+          if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
+            setLocation(getX() - (32*2), initialY - (32*2));
+            vertSpeed = 0;
         }
     }
 }

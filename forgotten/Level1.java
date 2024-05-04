@@ -10,31 +10,52 @@ public class Level1 extends World
          prepare();
     }
         
-    public void prepare() {    
-        int platLen4 = 4;
-        int platPos4 = 13;
-        generatePlatform(platPos4, platLen4, 14);
+    public void prepare() {   
+        int platLen9 = 10;
+        int platPos9 = 54;
+        generatePlatform(platPos9, platLen9, 14);
         
-        int platLen3 = 3;
-        int platPos3 = 8;
-        generatePlatform(platPos3, platLen3, 15);
+        int platLen8 = 4;
+        int platPos8 = 39   ;
+        generateFloatPlatform(platPos8, platLen8, 4);
         
-        int platLen2 = 10;
-        int platPos2 = 17;
-        generatePlatform(platPos2, platLen2,13); 
+        int platLen7 = 4;
+        int platPos7 = 45;
+        generateFloatPlatform(platPos7, platLen7, 7);
         
-        int platLen1 = 6;
+        int platLen6 = 3;
+        int platPos6 = 50;
+        generateFloatPlatform(platPos6, platLen6, 11);
+        
+        int platLen5 = 3;
+        int platPos5 = 46;
+        generateFloatPlatform(platPos5, platLen5, 13);
+        
+        int platLen4 = 2;
+        int platPos4 = 42;
+        generatePlatform(platPos4, platLen4, 15);
+        
+        int platLen3 = 21;
+        int platPos3 = 18;
+        generatePlatform(platPos3, platLen3, 13);
+        
+        int platLen2 = 4;
+        int platPos2 = 12;
+        generatePlatform(platPos2, platLen2,14); 
+        
+        int platLen1 = 10;
         int platPos1 = 0;
         generatePlatform(platPos1, platLen1,14); 
         
         Portal portal = new Portal();
-        addObject(portal, (32*20)-16, (32*11));
+        addObject(portal, (32*56)-16, (32*12));
                
         LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*10) - 16,(32*11));
+        addObject(levelGem, (32*39),(32*3));
+        
             
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
+        addObject(player, 1, MyWorld.HEIGHT - 142 + 32);
     }   
     
     public void generateSky() {

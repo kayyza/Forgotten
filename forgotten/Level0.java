@@ -36,7 +36,7 @@ public class Level0 extends World
         addObject(portal, (32*25), (32*12));
          
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
+        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);
     }    
     
     public void generateSky() {
