@@ -12,6 +12,7 @@ public class Player extends Moving
     private boolean onGround;
     private boolean hasLevelGem;
     private boolean isPortalOpen;
+    private boolean isPlayerAlive;
     
     private int initialX;
     private int initialY;
@@ -19,9 +20,11 @@ public class Player extends Moving
     private double acceleration;
     private double health;
     private double jumpHeight;
+    private double currentSpeed;
     
     private int height;
     private int width;
+     
     private int horzSpeed;
     private int vertSpeed;
     
@@ -38,10 +41,12 @@ public class Player extends Moving
         onGround = false;
         hasLevelGem = false;
         isPortalOpen =  false;
+        isPlayerAlive = true;
         
         acceleration = 1;
-        health = 3;
+        health = 1;
         jumpHeight = -44;
+    
         height = 36;
         width = 43;
         vertSpeed = 1;
@@ -65,9 +70,12 @@ public class Player extends Moving
         hitGem();
         hitPortal();
         checkEdges();
+        onGround();
+        checkPlayerStatus();
     }
     
     public void addedToWorld(World world) {
+        //is this method necessary?
         initialX = getX();
         initialY = getY();
     }
@@ -137,11 +145,26 @@ public class Player extends Moving
     }
     
     private boolean onGround() {
-        Actor under1 = getOneObjectAtOffset(0, 32/2, TallGrass.class);
-        Actor under2 = getOneObjectAtOffset(0, 32/2, Grass.class);
-        Actor under3 = getOneObjectAtOffset(0, 32/2, Dirt.class); 
+        Actor under1 = getOneObjectAtOffset(0, 32, TallGrass.class);
+        Actor under2 = getOneObjectAtOffset(0, 32, Grass.class);
+        Actor under3 = getOneObjectAtOffset(0, 32, Dirt.class); 
 
         return (under1 != null || under2 != null || under3 != null);
+    }
+    
+    private void inWater() {
+        if (getOneIntersectingObject(WaterSurface.class) != null) {
+            health = 0;
+            if ( health == 0) {
+                isPlayerAlive = false;
+            }
+        }
+    }
+    
+    private void checkPlayerStatus() {
+        if (!isPlayerAlive) {
+            Greenfoot.setWorld(new LevelFailed());
+        }
     }
     
     private void checkFalling() {
@@ -187,14 +210,15 @@ public class Player extends Moving
     private void hitPortal() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
             
-            if(getOneIntersectingObject(Portal.class) != null) {
-            if (MyWorld.LEVEL == 0) {
-                MyWorld.LEVEL = 1;
-                Greenfoot.setWorld(new Level1());
-            } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e")) {
-                MyWorld.LEVEL++;
-                MyWorld.changeWorld();        
-            }
+            if(getOneIntersectingObject(Portal.class) != null && hasLevelGem) {
+                //Greenfoot.
+                if (MyWorld.LEVEL == 0) {
+                    MyWorld.LEVEL = 1;
+                    Greenfoot.setWorld(new Level1());
+                } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e")) {
+                    MyWorld.LEVEL++;
+                    MyWorld.changeWorld();        
+                }
         }
     }
     

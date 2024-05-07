@@ -7,10 +7,14 @@ public class Level3 extends World
         super(768, 512, 1, false); 
         showText("LEVEL 3", 32*2, 32*2);
         generateSky();
-         prepare();
+        prepare();
     }
         
-    public void prepare() {    
+    public void prepare() {  
+        int waterLen1 = 24*2;
+        int waterPos1 = 0;
+        generateWater(waterPos1, waterLen1,14);
+        
         int platLen4 = 4;
         int platPos4 = 13;
         generatePlatform(platPos4, platLen4, 14);
@@ -50,6 +54,24 @@ public class Level3 extends World
             }
             
             rand = Greenfoot.getRandomNumber(333);
+        }
+    }
+    
+     public void generateWater(int x, int length, int y) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        y = 16 + (blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=blockSize) {
+            addObject(new WaterSurface(), i, y);
+            addObject(new WaterBody(), i, y + blockSize );
+            if((y / blockSize) < 14) {
+                int depth = 14 - (y / blockSize);
+
+                for (int d=0; d < depth*2; d++){
+                    addObject(new WaterBody(), i, y + blockSize + (blockSize*d) );
+                }
+            }
+        
         }
     }
     

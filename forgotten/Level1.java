@@ -7,10 +7,14 @@ public class Level1 extends World
         super(768, 512, 1, false); 
         showText("LEVEL 1", 32*2, 32*2);
         generateSky();
-         prepare();
+        prepare();
     }
         
-    public void prepare() {   
+    public void prepare() { 
+        int waterLen1 = 24*2;
+        int waterPos1 = 0;
+        generateWater(waterPos1, waterLen1,14);
+        
         int platLen9 = 10;
         int platPos9 = 54;
         generatePlatform(platPos9, platLen9, 14);
@@ -45,7 +49,7 @@ public class Level1 extends World
         
         int platLen1 = 10;
         int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,14); 
+        generatePlatform(platPos1, platLen1,14);  
         
         Portal portal = new Portal();
         addObject(portal, (32*56)-16, (32*12));
@@ -55,7 +59,7 @@ public class Level1 extends World
         
             
         Player player = new Player();
-        addObject(player, 1, MyWorld.HEIGHT - 142 + 32);
+        addObject(player, 1, MyWorld.HEIGHT - 142 + 16);
     }   
     
     public void generateSky() {
@@ -71,6 +75,24 @@ public class Level1 extends World
             }
             
             rand = Greenfoot.getRandomNumber(333);
+        }
+    }
+    
+    public void generateWater(int x, int length, int y) {
+        int blockSize = 32;
+        int startPos = 16 + (blockSize*x);
+        y = 16 + (blockSize * y);
+        for (int i = startPos; i < startPos + length*blockSize; i+=blockSize) {
+            addObject(new WaterSurface(), i, y);
+            addObject(new WaterBody(), i, y + blockSize );
+            if((y / blockSize) < 14) {
+                int depth = 14 - (y / blockSize);
+
+                for (int d=0; d < depth*2; d++){
+                    addObject(new WaterBody(), i, y + blockSize + (blockSize*d) );
+                }
+            }
+        
         }
     }
     

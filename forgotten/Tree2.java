@@ -2,12 +2,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Tree2 extends NonMoving
 {
-     private GreenfootImage image;
+    private GreenfootImage image;
+    /*private GreenfootImage topFront;
+    private GreenfootImage topBack;*/
     
     public Tree2() {
         image = getImage();
         image.scale(image.getWidth()*2, image.getHeight()*2);
         setImage(image);
+        
+        
         
         int rand = Greenfoot.getRandomNumber(333);
         boolean isFlipped = false;
