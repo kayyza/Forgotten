@@ -100,7 +100,7 @@ public class Player extends Moving
             if (rightKeyPressCount == 25) {
             //  I accidentally removed the grassStep sound file from the folder, so it bugs now ;;
             // (If someone can fix this, or send me the sound file so I can fix it that would be great!!) 
-            //Greenfoot.playSound("grassStep.wav");
+            Greenfoot.playSound("grassStep.wav");
             rightKeyPressCount = 0;
             } else {
             rightKeyPressCount++;
@@ -114,7 +114,7 @@ public class Player extends Moving
                 isImageFlipped = true;
             }
              if (leftKeyPressCount == 25) {
-            //Greenfoot.playSound("grassStep.wav");
+            Greenfoot.playSound("grassStep.wav");
             leftKeyPressCount = 0;
             } else {
             leftKeyPressCount++;
@@ -162,8 +162,9 @@ public class Player extends Moving
     }
     
     private void checkPlayerStatus() {
-        if (!isPlayerAlive) {
-            Greenfoot.setWorld(new LevelFailed());
+         if (!isPlayerAlive) {
+            LevelFailed levelFailed = new LevelFailed();
+            Greenfoot.setWorld(levelFailed);  
         }
     }
     
