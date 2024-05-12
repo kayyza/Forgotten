@@ -12,45 +12,72 @@ public class Level0 extends World
     }
         
     public void prepare() {        
-        int treesLen1 = 24;
-        int treesPos1 = 10;
-        int treesDis1 = 9;
-        generateTrees(treesPos1, treesLen1,8, treesDis1); 
+        if( MyWorld.LEVEL != 0) {
+            MyWorld.LEVEL = 0;
+        }
         
-        int treesLen2 = 24;
-        int treesPos2 = 16;
-        int treesDis2 = 6;
-        generateTrees(treesPos2, treesLen2,8, treesDis2);
+        TreeTopBack treeTopBack = new TreeTopBack();
+        addObject(treeTopBack,(32*15), (32*6));
         
-        int platLen1 = 24;
+        TreeTopBack treeTopBack2 = new TreeTopBack();
+        addObject(treeTopBack2,(32*24), (32*6));
+        
+        TreeTopBack treeTopBack3 = new TreeTopBack();
+        addObject(treeTopBack3,(32*17), (32*6));
+        
+        TreeTopBack treeTopBack4 = new TreeTopBack();
+        addObject(treeTopBack4,(32*11), (32*6));
+        
+        Tree1 tree1 = new Tree1();
+        addObject(tree1,(32*10), (32*9));
+        
+        Tree1 tree12 = new Tree1();
+        addObject(tree12,(32*15)-16, (32*9));
+        tree12.getImage().mirrorHorizontally();
+        
+        Tree2 tree2 = new Tree2();
+        addObject(tree2,(32*16), (32*9));
+        
+        Tree2 tree22 = new Tree2();
+        addObject(tree22,(32*24), (32*9));
+        
+        TreeTopFront treeTopFront = new TreeTopFront();
+        addObject(treeTopFront,(32*24), (32*6));
+        
+        TreeTopFront treeTopFront2 = new TreeTopFront();
+        addObject(treeTopFront2,(32*16), (32*6));
+        
+        TreeTopFront treeTopFront3 = new TreeTopFront();
+        addObject(treeTopFront3,(32*11), (32*6));
+        
+        int platLen1 = 30;
         int platPos1 = 0;
         generatePlatform(platPos1, platLen1,14); 
-        
-        int treesLen3 = 24;
-        int treesPos3 = 20;
-        int treesDis3 = 3;
-        generateTrees(treesPos3, treesLen3,8, treesDis3);
-        
+
+        int platLen = 1;
+        int platPos = -1;
+        generatePlatform(platPos, platLen,0); 
         
         Portal portal = new Portal();
         addObject(portal, (32*25), (32*12));
-         
+
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);
+        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);   
     }    
     
     public void generateSky() {
         int rand = Greenfoot.getRandomNumber(333);
 
-        for (int i = 0; i < 12000; i+=120) {
+        for (int i = 0; i < 12000; i+=60) {
+            addObject(new Sky5(), +i, 450);
+            addObject(new Sky4(), +i, 0);
             if (rand % 3 == 0) { 
-                addObject(new Sky3(), +i, (32*8)+16);
+                addObject(new Sky3(), +i, 200);
             } else if (rand % 2 == 0) {
-                addObject(new Sky2(), +i, (32*8)+16);
+                addObject(new Sky2(), +i, 200);
             } else {
-                addObject(new Sky1(), +i, (32*8)+16);
+                addObject(new Sky1(), +i, 200);
             }
-            
             rand = Greenfoot.getRandomNumber(333);
         }
     }

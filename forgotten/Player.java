@@ -12,7 +12,7 @@ public class Player extends Moving
     private boolean onGround;
     private boolean hasLevelGem;
     private boolean isPortalOpen;
-    private boolean isPlayerAlive;
+    public static boolean isPlayerAlive;
     
     private int initialX;
     private int initialY;
@@ -44,7 +44,7 @@ public class Player extends Moving
         isPlayerAlive = true;
         
         acceleration = 1;
-        health = 1;
+        health = 3;
         jumpHeight = -44;
     
         height = 36;
@@ -64,8 +64,10 @@ public class Player extends Moving
             image.scale(width,height);
             setImage(image);
         }
-        
-        moveAround();
+        if (isPlayerAlive) {
+            moveAround();
+        }
+        inWater();
         checkFalling();
         hitGem();
         hitPortal();
@@ -75,7 +77,6 @@ public class Player extends Moving
     }
     
     public void addedToWorld(World world) {
-        //is this method necessary?
         initialX = getX();
         initialY = getY();
     }
@@ -83,7 +84,7 @@ public class Player extends Moving
     public void moveAround(){
         if(Greenfoot.isKeyDown("shift")) {
             isSprinting = true;
-            acceleration = 1.5;
+            acceleration = 2;
             horzSpeed = 5;
         } else {
             isSprinting = false;
@@ -98,9 +99,7 @@ public class Player extends Moving
                 isImageFlipped = false;
             }
             if (rightKeyPressCount == 25) {
-            //  I accidentally removed the grassStep sound file from the folder, so it bugs now ;;
-            // (If someone can fix this, or send me the sound file so I can fix it that would be great!!) 
-            //Greenfoot.playSound("grassStep.wav");
+            
             rightKeyPressCount = 0;
             } else {
             rightKeyPressCount++;
@@ -114,7 +113,6 @@ public class Player extends Moving
                 isImageFlipped = true;
             }
              if (leftKeyPressCount == 25) {
-            //Greenfoot.playSound("grassStep.wav");
             leftKeyPressCount = 0;
             } else {
             leftKeyPressCount++;
@@ -128,7 +126,6 @@ public class Player extends Moving
                 vertSpeed = (int) (jumpHeight * acceleration / 4);
                 standUp();
                 fall();
-                //Greenfoot.playSound("jump_11.wav");
             }
             if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")) {
                 crouch();
@@ -136,11 +133,13 @@ public class Player extends Moving
                 standUp();
             }
         }
-        
     }
     
     private void fall() {
-        setLocation(getX(), getY() + vertSpeed);
+        if (isPlayerAlive == true) {
+            setLocation(getX(), getY() + vertSpeed);
+            vertSpeed++;
+        }
         vertSpeed++;
     }
     
@@ -152,18 +151,38 @@ public class Player extends Moving
         return (under1 != null || under2 != null || under3 != null);
     }
     
-    private void inWater() {
+    private boolean inWater() {
+        Actor under1 = getOneObjectAtOffset(0, 32, WaterBody.class);
+        Actor under2 = getOneObjectAtOffset(0, 32, WaterSurface.class);
         if (getOneIntersectingObject(WaterSurface.class) != null) {
-            health = 0;
-            if ( health == 0) {
-                isPlayerAlive = false;
-            }
+            health -= 1;
         }
+        return (under1 != null || under2 != null);
+
     }
     
     private void checkPlayerStatus() {
+        World world = getWorld();
+        if ( health == 0) {
+                isPlayerAlive = false;
+            }
         if (!isPlayerAlive) {
-            Greenfoot.setWorld(new LevelFailed());
+            world.addObject(new LevelFailed(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+            world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+            world.showText("Level Failed!", (32*12),(32*8)-8);
+            world.showText("retry?", (32*10)+8,(32*11));
+            if(MyWorld.LEVEL == 1){
+                Button retryButton = new Button("btn1.png", new Level1());
+                world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+            }
+            if(MyWorld.LEVEL == 2){
+                Button retryButton = new Button("btn1.png", new Level2());
+                world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+            }
+            if(MyWorld.LEVEL == 3){
+                Button retryButton = new Button("btn1.png", new Level3());
+                world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+            }
         }
     }
     
@@ -173,7 +192,7 @@ public class Player extends Moving
             fall();
         } else {
             isFalling = false;
-        }
+        } 
     }
     
     private void crouch() {
@@ -209,13 +228,19 @@ public class Player extends Moving
     
     private void hitPortal() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
-            
-            if(getOneIntersectingObject(Portal.class) != null && hasLevelGem) {
-                //Greenfoot.
+        World world = getWorld();
+        
+            if(getOneIntersectingObject(Portal.class) != null) {
+                if (isPlayerAlive) {
+                    world.addObject(new LevelCompleted(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    world.addObject(new Btn1(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    world.showText("Level Complete!", (32*12),(32*8)-8);
+                }
                 if (MyWorld.LEVEL == 0) {
                     MyWorld.LEVEL = 1;
                     Greenfoot.setWorld(new Level1());
-                } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e")) {
+                } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e") && hasLevelGem) {
                     MyWorld.LEVEL++;
                     MyWorld.changeWorld();        
                 }
@@ -224,59 +249,93 @@ public class Player extends Moving
     
     private void checkEdges() {
         // Left edge:
-        if (getX() >= MyWorld.WIDTH) {
-            setLocation(1, getY());
-            for (Object obj : getWorld().getObjects(TallGrass.class)) {
-                Actor tallGrass = (Actor) obj;
-                tallGrass.setLocation((tallGrass.getX() - MyWorld.WIDTH), tallGrass.getY());
+        if (MyWorld.LEVEL > 0){
+            if (getX() >= MyWorld.WIDTH) {
+                setLocation(1, getY());
+                for (Object obj : getWorld().getObjects(TallGrass.class)) {
+                    Actor tallGrass = (Actor) obj;
+                    tallGrass.setLocation((tallGrass.getX() - MyWorld.WIDTH), tallGrass.getY());
+                }
+                for (Object obj : getWorld().getObjects(Grass.class)) {
+                    Actor grass = (Actor) obj;
+                    grass.setLocation((grass.getX() - MyWorld.WIDTH), grass.getY());
+                }
+                for (Object obj : getWorld().getObjects(Dirt.class)) {
+                    Actor dirt = (Actor) obj;
+                    dirt.setLocation((dirt.getX() - MyWorld.WIDTH), dirt.getY());
+                }
+                for (Object obj : getWorld().getObjects(LevelGem.class)) {
+                    Actor levelGem = (Actor) obj;
+                    levelGem.setLocation((levelGem.getX() - MyWorld.WIDTH), levelGem.getY());
+                }
+                for (Object obj : getWorld().getObjects(Portal.class)) {
+                    Actor portal = (Actor) obj;
+                    portal.setLocation((portal.getX() - MyWorld.WIDTH), portal.getY());
+                }
+                for (Object obj : getWorld().getObjects(Tree1.class)) {
+                    Actor tree1 = (Actor) obj;
+                    tree1.setLocation((tree1.getX() + MyWorld.WIDTH), tree1.getY());
+                }
+                for (Object obj : getWorld().getObjects(Tree2.class)) {
+                    Actor tree2 = (Actor) obj;
+                    tree2.setLocation((tree2.getX() + MyWorld.WIDTH), tree2.getY());
+                }
+                for (Object obj : getWorld().getObjects(TreeTopBack.class)) {
+                    Actor treeTopBack = (Actor) obj;
+                    treeTopBack.setLocation((treeTopBack.getX() + MyWorld.WIDTH), treeTopBack.getY());
+                }
+                for (Object obj : getWorld().getObjects(TreeTopFront.class)) {
+                    Actor treeTopFront = (Actor) obj;
+                    treeTopFront.setLocation((treeTopFront.getX() + MyWorld.WIDTH), treeTopFront.getY());
+                }
             }
-            for (Object obj : getWorld().getObjects(Grass.class)) {
-                Actor grass = (Actor) obj;
-                grass.setLocation((grass.getX() - MyWorld.WIDTH), grass.getY());
+            
+            // Right edge:
+            if (getX() < 0) {
+                setLocation(MyWorld.WIDTH, getY());
+                for (Object obj : getWorld().getObjects(TallGrass.class)) {
+                    Actor tallGrass = (Actor) obj;
+                    tallGrass.setLocation((tallGrass.getX() + MyWorld.WIDTH), tallGrass.getY());
+                }
+                for (Object obj : getWorld().getObjects(Grass.class)) {
+                    Actor grass = (Actor) obj;
+                    grass.setLocation((grass.getX() + MyWorld.WIDTH), grass.getY());
+                }
+                for (Object obj : getWorld().getObjects(Dirt.class)) {
+                    Actor dirt = (Actor) obj;
+                    dirt.setLocation((dirt.getX() + MyWorld.WIDTH), dirt.getY());
+                }
+                for (Object obj : getWorld().getObjects(LevelGem.class)) {
+                    Actor levelGem = (Actor) obj;
+                    levelGem.setLocation((levelGem.getX() + MyWorld.WIDTH), levelGem.getY());
+                }
+                for (Object obj : getWorld().getObjects(Portal.class)) {
+                    Actor portal = (Actor) obj;
+                    portal.setLocation((portal.getX() + MyWorld.WIDTH), portal.getY());
+                }
+                for (Object obj : getWorld().getObjects(Tree1.class)) {
+                    Actor tree1 = (Actor) obj;
+                    tree1.setLocation((tree1.getX() + MyWorld.WIDTH), tree1.getY());
+                }
+                for (Object obj : getWorld().getObjects(Tree2.class)) {
+                    Actor tree2 = (Actor) obj;
+                    tree2.setLocation((tree2.getX() + MyWorld.WIDTH), tree2.getY());
+                }
+                for (Object obj : getWorld().getObjects(TreeTopBack.class)) {
+                    Actor treeTopBack = (Actor) obj;
+                    treeTopBack.setLocation((treeTopBack.getX() + MyWorld.WIDTH), treeTopBack.getY());
+                }
+                for (Object obj : getWorld().getObjects(TreeTopFront.class)) {
+                    Actor treeTopFront = (Actor) obj;
+                    treeTopFront.setLocation((treeTopFront.getX() + MyWorld.WIDTH), treeTopFront.getY());
+                }
             }
-            for (Object obj : getWorld().getObjects(Dirt.class)) {
-                Actor dirt = (Actor) obj;
-                dirt.setLocation((dirt.getX() - MyWorld.WIDTH), dirt.getY());
+            
+            // Bottom edge:
+              if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
+                setLocation(getX() - (32*2), initialY - (32*2));
+                vertSpeed = 0;
             }
-            for (Object obj : getWorld().getObjects(LevelGem.class)) {
-                Actor levelGem = (Actor) obj;
-                levelGem.setLocation((levelGem.getX() - MyWorld.WIDTH), levelGem.getY());
-            }
-            for (Object obj : getWorld().getObjects(Portal.class)) {
-                Actor portal = (Actor) obj;
-                portal.setLocation((portal.getX() - MyWorld.WIDTH), portal.getY());
-            }
-        }
-        
-        // Right edge:
-        if (getX() < 0) {
-            setLocation(MyWorld.WIDTH, getY());
-            for (Object obj : getWorld().getObjects(TallGrass.class)) {
-                Actor tallGrass = (Actor) obj;
-                tallGrass.setLocation((tallGrass.getX() + MyWorld.WIDTH), tallGrass.getY());
-            }
-            for (Object obj : getWorld().getObjects(Grass.class)) {
-                Actor grass = (Actor) obj;
-                grass.setLocation((grass.getX() + MyWorld.WIDTH), grass.getY());
-            }
-            for (Object obj : getWorld().getObjects(Dirt.class)) {
-                Actor dirt = (Actor) obj;
-                dirt.setLocation((dirt.getX() + MyWorld.WIDTH), dirt.getY());
-            }
-            for (Object obj : getWorld().getObjects(LevelGem.class)) {
-                Actor levelGem = (Actor) obj;
-                levelGem.setLocation((levelGem.getX() + MyWorld.WIDTH), levelGem.getY());
-            }
-            for (Object obj : getWorld().getObjects(Portal.class)) {
-                Actor portal = (Actor) obj;
-                portal.setLocation((portal.getX() + MyWorld.WIDTH), portal.getY());
-            }
-        }
-        
-        // Bottom edge:
-          if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
-            setLocation(getX() - (32*2), initialY - (32*2));
-            vertSpeed = 0;
         }
     }
 }

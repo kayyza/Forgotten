@@ -17,8 +17,10 @@ public class StartScreen extends World
     {    
         super(768, 512, 1); 
         // does the title have to be a button? can't it just be a plain image?
-        Button titleButton = new Button("title.png", new SplashScreen());
-        addObject(titleButton, 32*12, 32*5);
+        //Button titleButton = new Button("title.png", new SplashScreen());
+        GreenfootImage title = new GreenfootImage("title.png");
+        getBackground().drawImage(title, (32*4)+16, -(32*2));
+        
 
         Button startButton = new Button("start.png", new Level1());
         addObject(startButton, 32*12, 32*8);

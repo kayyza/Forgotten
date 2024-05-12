@@ -11,6 +11,10 @@ public class Level3 extends World
     }
         
     public void prepare() {  
+        if( MyWorld.LEVEL != 3) {
+            MyWorld.LEVEL = 3;
+        }
+        
         int waterLen1 = 24*2;
         int waterPos1 = 0;
         generateWater(waterPos1, waterLen1,14);
@@ -45,14 +49,15 @@ public class Level3 extends World
         int rand = Greenfoot.getRandomNumber(333);
 
         for (int i = 0; i < 12000; i+=60) {
+            addObject(new Sky5(), +i, 450);
+            addObject(new Sky4(), +i, 0);
             if (rand % 3 == 0) { 
-                addObject(new Sky3(), +i, 266);
+                addObject(new Sky3(), +i, 200);
             } else if (rand % 2 == 0) {
-                addObject(new Sky2(), +i, 266);
+                addObject(new Sky2(), +i, 200);
             } else {
-                addObject(new Sky1(), +i, 266);
+                addObject(new Sky1(), +i, 200);
             }
-            
             rand = Greenfoot.getRandomNumber(333);
         }
     }

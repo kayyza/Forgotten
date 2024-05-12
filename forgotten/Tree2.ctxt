@@ -2,7 +2,6 @@
 comment0.target=Tree2
 comment1.params=
 comment1.target=Tree2()
-comment1.text=private\ GreenfootImage\ topFront;\r\nprivate\ GreenfootImage\ topBack;
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
