@@ -344,7 +344,6 @@ dependency89.type=UsesDependency
 dependency9.from=MyWorld
 dependency9.to=Level1
 dependency9.type=UsesDependency
-<<<<<<< HEAD
 dependency90.from=Player
 dependency90.to=WaterSurface
 dependency90.type=UsesDependency
@@ -375,29 +374,13 @@ dependency98.type=UsesDependency
 dependency99.from=Grass
 dependency99.to=Player
 dependency99.type=UsesDependency
-editor.fx.0.height=1087
-editor.fx.0.width=974
-editor.fx.0.x=953
-editor.fx.0.y=0
-height=1096
-package.numDependencies=115
-package.numTargets=36
-=======
-<<<<<<< HEAD
 editor.fx.0.height=0
 editor.fx.0.width=0
 editor.fx.0.x=0
 editor.fx.0.y=0
-=======
-editor.fx.0.height=870
-editor.fx.0.width=780
-editor.fx.0.x=716
-editor.fx.0.y=92
->>>>>>> parent of 3b88d88 (grassstep)
 height=878
-package.numDependencies=77
-package.numTargets=28
->>>>>>> 41021849f688317e10886cbae9589a0ffa0f65de
+package.numDependencies=115
+package.numTargets=36
 project.charset=UTF-8
 publish.hasSource=false
 publish.locked=true
@@ -497,14 +480,14 @@ target2.width=120
 target2.x=0
 target2.y=0
 target20.height=70
-target20.name=TreeTopBack
+target20.name=Btn1
 target20.showInterface=false
 target20.type=ClassTarget
 target20.width=120
 target20.x=0
 target20.y=0
 target21.height=70
-target21.name=Btn1
+target21.name=TreeTopBack
 target21.showInterface=false
 target21.type=ClassTarget
 target21.width=120
