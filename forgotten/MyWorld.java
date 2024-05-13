@@ -16,10 +16,14 @@ public class MyWorld extends World
         
         addObject(timeCount, getWidth() / 2, getHeight() / 2);
         time.mark();
+        
+        //GreenfootSound song = new GreenfootSound ("background.mp3");
+        //song.setVolume(25);
+        //song.playLoop();
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
-        LEVEL = -1;
+        LEVEL = 0;
     
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);

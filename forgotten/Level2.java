@@ -19,28 +19,48 @@ public class Level2 extends World
         int waterPos1 = 0;
         generateWater(waterPos1, waterLen1,14);
         
-        int platLen4 = 4;
-        int platPos4 = 13;
-        generatePlatform(platPos4, platLen4, 14);
+        int platLen10 = 3;
+        int platPos10 = 33;
+        generatePlatform(platPos10, platLen10, 14);
         
-        int platLen3 = 3;
-        int platPos3 = 8;
-        generatePlatform(platPos3, platLen3, 15);
+        int platLen9 = 3;
+        int platPos9 = 38;
+        generatePlatform(platPos9, platLen9, 14);
         
-        int platLen2 = 10;
-        int platPos2 = 17;
-        generatePlatform(platPos2, platLen2,13); 
+        int platLen8 = 5;
+        int platPos8 = 45;
+        generatePlatform(platPos8, platLen8, 10);
+        
+        int platLen7 = 12;
+        int platPos7 = 29;
+        generateFloatPlatform(platPos7, platLen7, 7);
+        
+        int platLen6 = 3;
+        int platPos6 = 23;
+        generateFloatPlatform(platPos6, platLen6, 9);
+        
+        int platLen5 = 5;
+        int platPos5 = 25;
+        generateFloatPlatform(platPos5, platLen5, 12);
+        
+        int platLen3 = 8;
+        int platPos3 = 15;
+        generatePlatform(platPos3, platLen3, 14);
+        
+        int platLen2 = 3;
+        int platPos2 = 8;
+        generatePlatform(platPos2, platLen2, 12);
         
         int platLen1 = 6;
         int platPos1 = 0;
         generatePlatform(platPos1, platLen1,14); 
         
         Portal portal = new Portal();
-        addObject(portal, (32*20)-16, (32*11));
+        addObject(portal, (32*19), (32*12));
                
         LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*10) - 16,(32*11));
-            
+        addObject(levelGem, (32*38) - 16,(32*5));
+
         Player player = new Player();
         addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
     }   

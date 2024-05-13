@@ -42,9 +42,9 @@ public class Level1 extends World
         int platPos5 = 46;
         generateFloatPlatform(platPos5, platLen5, 13);
 
-        int platLen4 = 2;
+        int platLen4 = 3;
         int platPos4 = 42;
-        generatePlatform(platPos4, platLen4, 15);
+        generatePlatform(platPos4, platLen4, 14);
 
         int platLen3 = 21;
         int platPos3 = 18;

@@ -19,27 +19,103 @@ public class Level3 extends World
         int waterPos1 = 0;
         generateWater(waterPos1, waterLen1,14);
         
-        int platLen4 = 4;
-        int platPos4 = 13;
-        generatePlatform(platPos4, platLen4, 14);
+        int platLen23 = 3;
+        int platPos23 = 82;
+        generateFloatPlatform(platPos23, platLen23,3);
+        
+        int platLen22 = 3;
+        int platPos22 = 87;
+        generateFloatPlatform(platPos22, platLen22,3);
+        
+        int platLen21 = 3;
+        int platPos21 = 91;
+        generateFloatPlatform(platPos21, platLen21,6);
+        
+        int platLen20 = 3;
+        int platPos20 = 87;
+        generateFloatPlatform(platPos20, platLen20,9);
+        
+        int platLen19 = 3;
+        int platPos19 = 91;
+        generateFloatPlatform(platPos19, platLen19,12);
+        
+        int platLen18 = 3;
+        int platPos18 = 87;
+        generateFloatPlatform(platPos18, platLen18,14);
+        
+        int platLen17 = 3;
+        int platPos17 = 83;
+        generateFloatPlatform(platPos17, platLen17,14);
+        
+        int platLen16 = 3;
+        int platPos16 = 77;
+        generateFloatPlatform(platPos16, platLen16,14);
+        
+        int platLen15 = 4;
+        int platPos15 = 70;
+        generateFloatPlatform(platPos15, platLen15,11);
+        
+        int platLen14 = 4;
+        int platPos14 = 64;
+        generateFloatPlatform(platPos14, platLen14,11);
+        
+        int platLen13 = 4;
+        int platPos13 = 57;
+        generateFloatPlatform(platPos13, platLen13,11);
+        
+        int platLen12 = 2;
+        int platPos12 = 38;
+        generatePlatform(platPos12, platLen12,14);
+        
+        int platLen11 = 3;
+        int platPos11 = 51;
+        generatePlatform(platPos11, platLen11,12);
+        
+        int platLen10 = 3;
+        int platPos10 = 46;
+        generatePlatform(platPos10, platLen10,13);
+        
+        int platLen9 = 4;
+        int platPos9 = 40;
+        generatePlatform(platPos9, platLen9,14);
+        
+        int platLen8 = 10;
+        int platPos8 = 28;
+        generateFloatPlatform(platPos8, platLen8,5);
+        
+        int platLen7 = 3;
+        int platPos7 = 24;
+        generateFloatPlatform(platPos7, platLen7,7);
+        
+        int platLen6 = 3;
+        int platPos6 = 28;
+        generateFloatPlatform(platPos6, platLen6,9);
+        
+        int platLen5 = 3;
+        int platPos5 = 24;
+        generateFloatPlatform(platPos5, platLen5,11);
+        
+        int platLen4 = 3;
+        int platPos4 = 20;
+        generatePlatform(platPos4, platLen4,14);
         
         int platLen3 = 3;
-        int platPos3 = 8;
-        generatePlatform(platPos3, platLen3, 15);
+        int platPos3 = 15;
+        generatePlatform(platPos3, platLen3,13);
         
-        int platLen2 = 10;
-        int platPos2 = 17;
-        generatePlatform(platPos2, platLen2,13); 
+        int platLen2 = 3;
+        int platPos2 = 9;
+        generatePlatform(platPos2, platLen2,14);
         
         int platLen1 = 6;
         int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,14); 
+        generatePlatform(platPos1, platLen1,14);    
         
         Portal portal = new Portal();
-        addObject(portal, (32*20)-16, (32*11));
+        addObject(portal, (32*84)-16, (32*2));
                
         LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*10) - 16,(32*11));
+        addObject(levelGem, (32*40) - 16,(32*13));
             
         Player player = new Player();
         addObject(player, 0, MyWorld.HEIGHT - 142 + 32);

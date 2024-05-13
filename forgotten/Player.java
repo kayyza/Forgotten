@@ -13,6 +13,7 @@ public class Player extends Moving
     private boolean hasLevelGem;
     private boolean isPortalOpen;
     public static boolean isPlayerAlive;
+    public static boolean isPlayerMoving;
     
     private int initialX;
     private int initialY;
@@ -31,6 +32,10 @@ public class Player extends Moving
     private int leftKeyPressCount;
     private int rightKeyPressCount;
     
+    private int soundLoop;
+    GreenfootSound walk = new GreenfootSound("walking.wav");
+    GreenfootSound run = new GreenfootSound("running.wav");
+    
     public Player()
     {
         runAnimation = new GifImage("run_animation.gif");
@@ -42,6 +47,8 @@ public class Player extends Moving
         hasLevelGem = false;
         isPortalOpen =  false;
         isPlayerAlive = true;
+        isPlayerMoving = false;
+        
         
         acceleration = 1;
         health = 3;
@@ -81,7 +88,20 @@ public class Player extends Moving
         initialY = getY();
     }
     
+    
     public void moveAround(){
+        if(Greenfoot.isKeyDown("shift") && isPlayerMoving == true) {
+            walk.stop();
+            if(soundLoop < 0 && !run.isPlaying()) {
+                  run.play();
+                  soundLoop = 80;
+               } else {
+                  soundLoop--;
+               }
+            } else {
+                run.stop();
+            }
+            
         if(Greenfoot.isKeyDown("shift")) {
             isSprinting = true;
             acceleration = 2;
@@ -94,6 +114,8 @@ public class Player extends Moving
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {
             move(horzSpeed);
+            isPlayerMoving = true;
+     
             if(isImageFlipped) {
                 getImage().mirrorHorizontally();
                 isImageFlipped = false;
@@ -105,9 +127,11 @@ public class Player extends Moving
             rightKeyPressCount++;
             }
         }
+        
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a"))
         {
             move(-horzSpeed);
+            isPlayerMoving = true;
             if (!isImageFlipped) {
                 getImage().mirrorHorizontally();
                 isImageFlipped = true;
@@ -118,10 +142,30 @@ public class Player extends Moving
             leftKeyPressCount++;
             }
         }
+        if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")||  Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")))
+        {
+                isPlayerMoving = false;
+                
+        }
         if (onGround() == true)
         {
+            if(isPlayerMoving == true)
+            {
+                if(soundLoop < 0 && !walk.isPlaying()) {
+                  walk.play();
+                  soundLoop = 80;
+               } else {
+                  soundLoop--;
+               }
+            } else {
+                walk.stop();
+            }
+            
             if(Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("space"))
             {
+                GreenfootSound sound = new GreenfootSound("jump.wav");
+                sound.setVolume(75);
+                sound.play();
                 crouch();
                 vertSpeed = (int) (jumpHeight * acceleration / 4);
                 standUp();
@@ -156,6 +200,8 @@ public class Player extends Moving
         Actor under2 = getOneObjectAtOffset(0, 32, WaterSurface.class);
         if (getOneIntersectingObject(WaterSurface.class) != null) {
             health -= 1;
+            
+            Greenfoot.playSound("splash.wav");
         }
         return (under1 != null || under2 != null);
 
@@ -219,6 +265,7 @@ public class Player extends Moving
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
         
         if (getOneIntersectingObject(LevelGem.class) != null) {
+            Greenfoot.playSound("gem.wav");
             getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
             hasLevelGem = true;
             isPortalOpen = true;
@@ -232,12 +279,14 @@ public class Player extends Moving
         
             if(getOneIntersectingObject(Portal.class) != null) {
                 if (isPlayerAlive) {
+                    Greenfoot.playSound("lvlComp.wav");
                     world.addObject(new LevelCompleted(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
                     world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
                     world.addObject(new Btn1(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
                     world.showText("Level Complete!", (32*12),(32*8)-8);
                 }
                 if (MyWorld.LEVEL == 0) {
+                    Greenfoot.playSound("lvlComp.wav");
                     MyWorld.LEVEL = 1;
                     Greenfoot.setWorld(new Level1());
                 } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e") && hasLevelGem) {
