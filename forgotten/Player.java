@@ -15,6 +15,8 @@ public class Player extends Moving
     public static boolean isPlayerAlive;
     public static boolean isPlayerMoving;
     
+    public static int section;
+    
     private int initialX;
     private int initialY;
     
@@ -49,6 +51,7 @@ public class Player extends Moving
         isPlayerAlive = true;
         isPlayerMoving = false;
         
+        section = 0;
         
         acceleration = 1;
         health = 3;
@@ -71,9 +74,8 @@ public class Player extends Moving
             image.scale(width,height);
             setImage(image);
         }
-        if (isPlayerAlive) {
-            moveAround();
-        }
+        
+        moveAround();
         inWater();
         checkFalling();
         hitGem();
@@ -200,7 +202,9 @@ public class Player extends Moving
         Actor under2 = getOneObjectAtOffset(0, 32, WaterSurface.class);
         if (getOneIntersectingObject(WaterSurface.class) != null) {
             health -= 1;
-            
+            Greenfoot.playSound("splash.wav");
+        } else if (getOneIntersectingObject(WaterBody.class) != null) {
+            health -= 1;
             Greenfoot.playSound("splash.wav");
         }
         return (under1 != null || under2 != null);
@@ -210,7 +214,12 @@ public class Player extends Moving
     private void checkPlayerStatus() {
         World world = getWorld();
         if ( health == 0) {
+                run.stop();
+                walk.stop();
+                isPlayerMoving = false;
                 isPlayerAlive = false;
+                getImage().setTransparency(0);
+                world.removeObject(this);
             }
         if (!isPlayerAlive) {
             world.addObject(new LevelFailed(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
@@ -263,14 +272,18 @@ public class Player extends Moving
     
     private void hitGem() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
-        
-        if (getOneIntersectingObject(LevelGem.class) != null) {
-            Greenfoot.playSound("gem.wav");
-            getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
-            hasLevelGem = true;
-            isPortalOpen = true;
-            portal.setImage("lift-open.png");
-        } 
+        if( MyWorld.LEVEL >= 1) {
+            MissingGem missingGem = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
+            if (getOneIntersectingObject(LevelGem.class) != null) {
+                Greenfoot.playSound("gem.wav");
+                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
+                hasLevelGem = true;
+                missingGem.setImage("gem2.png");
+                missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
+                isPortalOpen = true;
+                portal.setImage("lift-open.png");
+            }
+        }
     }
     
     private void hitPortal() {
@@ -278,20 +291,38 @@ public class Player extends Moving
         World world = getWorld();
         
             if(getOneIntersectingObject(Portal.class) != null) {
-                if (isPlayerAlive) {
-                    Greenfoot.playSound("lvlComp.wav");
-                    world.addObject(new LevelCompleted(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
-                    world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
-                    world.addObject(new Btn1(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
-                    world.showText("Level Complete!", (32*12),(32*8)-8);
-                }
                 if (MyWorld.LEVEL == 0) {
-                    Greenfoot.playSound("lvlComp.wav");
                     MyWorld.LEVEL = 1;
                     Greenfoot.setWorld(new Level1());
-                } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e") && hasLevelGem) {
-                    MyWorld.LEVEL++;
-                    MyWorld.changeWorld();        
+                } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e") && isPortalOpen && hasLevelGem) {
+                    world.addObject(new LevelCompleted(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    world.showText("Level Complete!", (32*12),(32*8)-8);
+                    if(MyWorld.LEVEL == 3){
+                        Button retryButton = new Button("btn1.png", new Level3());
+                        world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                        Button nextButton = new Button("btn2.png", new SplashScreen());
+                    world.addObject(nextButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                    }   
+                    if(MyWorld.LEVEL == 2){
+                        Button retryButton = new Button("btn1.png", new Level2());
+                        world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                        world.showText("retry?", (32*10)+8,(32*11));
+                        Button nextButton = new Button("btn2.png", new Level3());
+                        world.addObject(nextButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                        world.showText("next level", (32*14),(32*11));
+                    }
+                    if(MyWorld.LEVEL == 1){
+                        Button retryButton = new Button("btn1.png", new Level1());
+                        world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                        world.showText("retry?", (32*10)+8,(32*11));
+                        Button nextButton = new Button("btn2.png", new Level2());
+                        world.addObject(nextButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+                        world.showText("next level", (32*14),(32*11));
+                        
+                    }
+                    
+                      
                 }
         }
     }
@@ -300,6 +331,7 @@ public class Player extends Moving
         // Left edge:
         if (MyWorld.LEVEL > 0){
             if (getX() >= MyWorld.WIDTH) {
+                section -= 1;
                 setLocation(1, getY());
                 for (Object obj : getWorld().getObjects(TallGrass.class)) {
                     Actor tallGrass = (Actor) obj;
@@ -324,23 +356,28 @@ public class Player extends Moving
                 for (Object obj : getWorld().getObjects(Tree1.class)) {
                     Actor tree1 = (Actor) obj;
                     tree1.setLocation((tree1.getX() + MyWorld.WIDTH), tree1.getY());
+                    getWorld().removeObject(tree1);
                 }
                 for (Object obj : getWorld().getObjects(Tree2.class)) {
                     Actor tree2 = (Actor) obj;
                     tree2.setLocation((tree2.getX() + MyWorld.WIDTH), tree2.getY());
+                    getWorld().removeObject(tree2);
                 }
                 for (Object obj : getWorld().getObjects(TreeTopBack.class)) {
                     Actor treeTopBack = (Actor) obj;
                     treeTopBack.setLocation((treeTopBack.getX() + MyWorld.WIDTH), treeTopBack.getY());
+                    getWorld().removeObject(treeTopBack);
                 }
                 for (Object obj : getWorld().getObjects(TreeTopFront.class)) {
                     Actor treeTopFront = (Actor) obj;
                     treeTopFront.setLocation((treeTopFront.getX() + MyWorld.WIDTH), treeTopFront.getY());
+                    getWorld().removeObject(treeTopFront);
                 }
             }
             
             // Right edge:
             if (getX() < 0) {
+                section += 1;
                 setLocation(MyWorld.WIDTH, getY());
                 for (Object obj : getWorld().getObjects(TallGrass.class)) {
                     Actor tallGrass = (Actor) obj;
@@ -365,6 +402,7 @@ public class Player extends Moving
                 for (Object obj : getWorld().getObjects(Tree1.class)) {
                     Actor tree1 = (Actor) obj;
                     tree1.setLocation((tree1.getX() + MyWorld.WIDTH), tree1.getY());
+                    
                 }
                 for (Object obj : getWorld().getObjects(Tree2.class)) {
                     Actor tree2 = (Actor) obj;
@@ -382,7 +420,7 @@ public class Player extends Moving
             
             // Bottom edge:
               if (getY() >= getWorld().getHeight() - getImage().getHeight()/2) {
-                setLocation(getX() - (32*2), initialY - (32*2));
+                health = 0;
                 vertSpeed = 0;
             }
         }
