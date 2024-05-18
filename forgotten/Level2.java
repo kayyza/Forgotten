@@ -23,13 +23,13 @@ public class Level2 extends World
         int platPos10 = 33;
         generatePlatform(platPos10, platLen10, 14);
         
-        int platLen9 = 3;
+        int platLen9 = 4;
         int platPos9 = 38;
         generatePlatform(platPos9, platLen9, 14);
         
         int platLen8 = 5;
         int platPos8 = 45;
-        generatePlatform(platPos8, platLen8, 10);
+        generatePlatform(platPos8, platLen8, 12);
         
         int platLen7 = 12;
         int platPos7 = 29;
@@ -59,7 +59,7 @@ public class Level2 extends World
         addObject(portal, (32*19), (32*12));
                
         LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*38) - 16,(32*5));
+        addObject(levelGem, (32*48) - 16,(32*10));
 
          MissingGem missingGem = new MissingGem();
         missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);

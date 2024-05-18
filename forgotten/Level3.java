@@ -39,17 +39,13 @@ public class Level3 extends World
         int platPos19 = 91;
         generateFloatPlatform(platPos19, platLen19,12);
         
-        int platLen18 = 3;
-        int platPos18 = 87;
-        generateFloatPlatform(platPos18, platLen18,14);
-        
-        int platLen17 = 3;
+        int platLen17 = 7;
         int platPos17 = 83;
-        generateFloatPlatform(platPos17, platLen17,14);
+        generateFloatPlatform(platPos17, platLen17,13);
         
-        int platLen16 = 3;
-        int platPos16 = 77;
-        generateFloatPlatform(platPos16, platLen16,14);
+        int platLen16 = 5;
+        int platPos16 = 76;
+        generateFloatPlatform(platPos16, platLen16,12);
         
         int platLen15 = 4;
         int platPos15 = 70;
@@ -65,7 +61,7 @@ public class Level3 extends World
         
         int platLen12 = 2;
         int platPos12 = 38;
-        generatePlatform(platPos12, platLen12,14);
+        generatePlatform(platPos12, platLen12,13);
         
         int platLen11 = 3;
         int platPos11 = 51;
@@ -77,7 +73,7 @@ public class Level3 extends World
         
         int platLen9 = 4;
         int platPos9 = 40;
-        generatePlatform(platPos9, platLen9,14);
+        generatePlatform(platPos9, platLen9,13);
         
         int platLen8 = 10;
         int platPos8 = 28;
@@ -115,7 +111,7 @@ public class Level3 extends World
         addObject(portal, (32*84)-16, (32*2));
                
         LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*40) - 16,(32*13));
+        addObject(levelGem, (32*40) - 16,(32*11));
         
         MissingGem missingGem = new MissingGem();
         missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
