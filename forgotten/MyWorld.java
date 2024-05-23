@@ -16,20 +16,14 @@ public class MyWorld extends World
         
         addObject(timeCount, getWidth() / 2, getHeight() / 2);
         time.mark();
-        
-        //GreenfootSound song = new GreenfootSound ("background.mp3");
-        //song.setVolume(25);
-        //song.playLoop();
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
-        LEVEL = 0;
+        LEVEL = -2;
     
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);
         bg.fill();
-        
-        
         
         prepare();
     }
@@ -37,12 +31,24 @@ public class MyWorld extends World
     public void act()
     {
         super.act();
-        timeCount.setValue(time.millisElapsed() / 1000);
+        timeCount.setValue(time.millisElapsed());
     }
     
     private void prepare()
     {
         changeWorld();
+        //playMusic();    
+    }
+    
+    public void playMusic() {
+        GreenfootSound song = new GreenfootSound ("background.mp3");
+        song.setVolume(8);
+        if (LEVEL >= 0 ) {
+            song.playLoop();
+        } else {
+            song.setVolume(0);
+            song.stop();
+        }
     }
     
     public void generatePlatform(int x, int length, int y) {

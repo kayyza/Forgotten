@@ -2,11 +2,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Level0 extends World
 {
+    //SimpleTimer time = new SimpleTimer();
+    
     public Level0()
     {    
         super(768, 512, 1, false); 
-        showText("TUTORIAL", 32*2, 32*2);
-        showText("" + MyWorld.LEVEL, 32*2, 32*3);
+
+        showText("Level : " + MyWorld.LEVEL, 32*2, 32*1);
         generateSky();
         prepare();
     }
@@ -58,11 +60,20 @@ public class Level0 extends World
         int platPos = -1;
         generatePlatform(platPos, platLen,0); 
         
+        Spirit spirit1 = new Spirit();
+        addObject(spirit1, (32*20), (32*12));
+        
+        Spirit spirit2 = new Spirit();
+        addObject(spirit2, (32*24)+4, (32*12));
+        
         Portal portal = new Portal();
         addObject(portal, (32*25), (32*12));
 
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);   
+        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);
+        
+        //addObject(new Counter(), (32*2), (32*2));
+        //time.mark();
     }    
     
     public void generateSky() {

@@ -60,8 +60,6 @@ public class Counter extends Actor
      */
     public void act() 
     {
-        setLocation(49, 20);
-    
         if (value < target) {
             value++;
             updateImage();
@@ -115,7 +113,7 @@ public class Counter extends Actor
     private void updateImage()
     {
         GreenfootImage image = new GreenfootImage(background);
-        GreenfootImage text = new GreenfootImage(prefix + value, 22, Color.WHITE, transparent);
+        GreenfootImage text = new GreenfootImage(prefix + value, 22, Color.BLACK, transparent);
         
         if (text.getWidth() > image.getWidth() - 20)
         {
@@ -125,8 +123,5 @@ public class Counter extends Actor
         image.drawImage(text, (image.getWidth()-text.getWidth())/2, 
                         (image.getHeight()-text.getHeight())/2);
         setImage(image);
-        
-        
-        //1, 2, 3
     }
 }

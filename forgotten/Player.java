@@ -2,10 +2,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Player extends Moving
 {
-    GifImage runAnimation;
-    GreenfootImage image;
+    //GifImage runAnimation;
+    GreenfootImage[] runAnimationRight = new GreenfootImage[7];
+    GreenfootImage[] runAnimationLeft = new GreenfootImage[7];
+    private int animationCounter = 0;
     
-    private boolean isImageFlipped;
     private boolean isCrouching;
     private boolean isFalling;
     private boolean isSprinting;
@@ -40,8 +41,6 @@ public class Player extends Moving
     
     public Player()
     {
-        runAnimation = new GifImage("run_animation.gif");
-        isImageFlipped = false;
         isCrouching = false;
         isFalling = true;
         isSprinting = false;
@@ -57,28 +56,28 @@ public class Player extends Moving
         health = 3;
         jumpHeight = -44;
     
-        height = 36;
-        width = 43;
-        vertSpeed = 1;
-        horzSpeed = 3;
+        height = 36*2;
+        width = 43*2;
+        vertSpeed = 2;
+        horzSpeed = 4;
         
         leftKeyPressCount = 0;
         rightKeyPressCount = 0;
         
+        walk.setVolume(45);
+        run.setVolume(85);
+        
+        initRunAnimationRight();
+        initRunAnimationLeft();
     }
     
     public void act()
     {
-        if (image != null) {
-            image = runAnimation.getCurrentImage();
-            image.scale(width,height);
-            setImage(image);
-        }
-        
         moveAround();
         inWater();
         checkFalling();
         hitGem();
+        hitSpirit();
         hitPortal();
         checkEdges();
         onGround();
@@ -90,6 +89,43 @@ public class Player extends Moving
         initialY = getY();
     }
     
+    public void initRunAnimationRight() {
+        for (int i=0; i<7; i++) {
+            String imgSrc = "runF" + i + ".png";
+            GreenfootImage imgSetter = new GreenfootImage(imgSrc);
+            imgSetter.scale(imgSetter.getWidth()*2, imgSetter.getHeight()*2);
+            runAnimationRight[i] = imgSetter;
+        }
+    }
+    
+    public void runAnimationRight() {
+        setImage(runAnimationRight[animationCounter % 7]);
+
+        for (int d=0; d <= 9; d++) {
+            if  (d == 9) {
+                animationCounter++;        
+            }
+        }
+    }
+    
+    public void initRunAnimationLeft() {
+        for (int i=0; i<7; i++) {
+            String imgSrc = "runF" + i + ".png";
+            GreenfootImage imgSetter = new GreenfootImage(imgSrc);
+            imgSetter.scale(imgSetter.getWidth()*2, imgSetter.getHeight()*2);
+            imgSetter.mirrorHorizontally();
+            runAnimationLeft[i] = imgSetter;
+        }
+    }
+    
+    public void runAnimationLeft() {
+        setImage(runAnimationLeft[animationCounter % 7]);
+        for (int d=0; d <= 9; d++) {
+            if  (d == 9) {
+                animationCounter++;        
+            }
+        }
+    }
     
     public void moveAround(){
         if(Greenfoot.isKeyDown("shift") && isPlayerMoving == true) {
@@ -107,23 +143,18 @@ public class Player extends Moving
         if(Greenfoot.isKeyDown("shift")) {
             isSprinting = true;
             acceleration = 2;
-            horzSpeed = 5;
+            horzSpeed = 6;
         } else {
             isSprinting = false;
             acceleration = 1.25;
-            horzSpeed = 3;
+            horzSpeed = 4;
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d"))
         {
+            runAnimationRight();
             move(horzSpeed);
             isPlayerMoving = true;
-     
-            if(isImageFlipped) {
-                getImage().mirrorHorizontally();
-                isImageFlipped = false;
-            }
             if (rightKeyPressCount == 25) {
-            
             rightKeyPressCount = 0;
             } else {
             rightKeyPressCount++;
@@ -132,12 +163,9 @@ public class Player extends Moving
         
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a"))
         {
+            runAnimationLeft();
             move(-horzSpeed);
             isPlayerMoving = true;
-            if (!isImageFlipped) {
-                getImage().mirrorHorizontally();
-                isImageFlipped = true;
-            }
              if (leftKeyPressCount == 25) {
             leftKeyPressCount = 0;
             } else {
@@ -168,15 +196,13 @@ public class Player extends Moving
                 GreenfootSound sound = new GreenfootSound("jump.wav");
                 sound.setVolume(75);
                 sound.play();
-                crouch();
-                vertSpeed = (int) (jumpHeight * acceleration / 4);
+                if  (isSprinting) {
+                    vertSpeed = (int) (jumpHeight * acceleration / 4);    
+                } else {
+                    vertSpeed = (int) (jumpHeight * acceleration / 3);
+                }
                 standUp();
                 fall();
-            }
-            if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")) {
-                crouch();
-            } else {
-                standUp();
             }
         }
     }
@@ -200,12 +226,15 @@ public class Player extends Moving
     private boolean inWater() {
         Actor under1 = getOneObjectAtOffset(0, 32, WaterBody.class);
         Actor under2 = getOneObjectAtOffset(0, 32, WaterSurface.class);
+        GreenfootSound sound = new GreenfootSound("splash.wav");
+        sound.setVolume(75);
+                
         if (getOneIntersectingObject(WaterSurface.class) != null) {
             health -= 1;
-            Greenfoot.playSound("splash.wav");
+            sound.play();
         } else if (getOneIntersectingObject(WaterBody.class) != null) {
             health -= 1;
-            Greenfoot.playSound("splash.wav");
+            sound.play();
         }
         return (under1 != null || under2 != null);
 
@@ -226,6 +255,7 @@ public class Player extends Moving
             world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
             world.showText("Level Failed!", (32*12),(32*8)-8);
             world.showText("retry?", (32*10)+8,(32*11));
+
             if(MyWorld.LEVEL == 1){
                 Button retryButton = new Button("btn1.png", new Level1());
                 world.addObject(retryButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
@@ -251,7 +281,8 @@ public class Player extends Moving
     }
     
     private void crouch() {
-        if (!isCrouching) {
+        GreenfootImage image = getImage();
+        if (!isCrouching && Greenfoot.isKeyDown("Ctrl")) {
             if (image != null) {
                 image.scale(width, height/2);
                 setImage(image);
@@ -261,12 +292,20 @@ public class Player extends Moving
     }
     
     private void standUp() {
+        GreenfootImage image = getImage();
         if (isCrouching) {
             if(image != null) {
                 image.scale(width, height);
                 setImage(image);
                 isCrouching = false;
             }
+        }
+    }
+    
+    private void hitSpirit() {
+        if (getOneIntersectingObject(Spirit.class) != null) {
+            getOneIntersectingObject(Spirit.class).getImage().setTransparency(0);
+            getWorld().removeObject(getOneIntersectingObject(Spirit.class));                  
         }
     }
     
