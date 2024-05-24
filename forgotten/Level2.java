@@ -20,54 +20,110 @@ public class Level2 extends World
         int waterPos1 = 0;
         generateWater(waterPos1, waterLen1,14);
         
+        int platLen15 = 5;
+        int platPos15 = 44;
+        generateFloatPlatform(platPos15, platLen15, 4);
+        
+        int platLen14 = 10;
+        int platPos14 = 57;
+        generatePlatform(platPos14, platLen14, 9);
+        
+        int platLen13 = 10;
+        int platPos13 = 58;
+        generatePlatform(platPos13, platLen13, 7);
+        
+        int platLen12 = 4;
+        int platPos12 = 54;
+        generatePlatform(platPos12, platLen12, 10);
+        
+        int platLen11 = 3;
+        int platPos11 = 51;
+        generatePlatform(platPos11, platLen11, 11);
+        
         int platLen10 = 3;
-        int platPos10 = 33;
-        generatePlatform(platPos10, platLen10, 14);
+        int platPos10 = 45;
+        generatePlatform(platPos10, platLen10, 13);
         
-        int platLen9 = 3;
-        int platPos9 = 38;
-        generatePlatform(platPos9, platLen9, 14);
+        int platLen9 = 5;
+        int platPos9 = 26;
+        generatePlatform(platPos9, platLen9, 13);
         
-        int platLen8 = 5;
-        int platPos8 = 45;
-        generatePlatform(platPos8, platLen8, 10);
+        int platLen7 = 3;
+        int platPos7 = 36;
+        generatePlatform(platPos7, platLen7, 6);
         
-        int platLen7 = 12;
-        int platPos7 = 29;
-        generateFloatPlatform(platPos7, platLen7, 7);
+        int platLen8 = 9;
+        int platPos8 = 33;
+        generatePlatform(platPos8, platLen8, 14);
         
-        int platLen6 = 3;
-        int platPos6 = 23;
-        generateFloatPlatform(platPos6, platLen6, 9);
+        Dirt dirt21 = new Dirt();
+        addObject(dirt21, (32*40)-16,(32*6)+16);
         
-        int platLen5 = 5;
-        int platPos5 = 25;
-        generateFloatPlatform(platPos5, platLen5, 12);
+        Dirt dirt11 = new Dirt();
+        addObject(dirt11, (32*36)-16,(32*6)+16);
         
-        int platLen3 = 8;
-        int platPos3 = 15;
-        generatePlatform(platPos3, platLen3, 14);
+        Dirt dirt12 = new Dirt();
+        addObject(dirt12, (32*35)-16,(32*6)+16);
         
-        int platLen2 = 3;
-        int platPos2 = 8;
-        generatePlatform(platPos2, platLen2, 12);
+        Dirt dirt13 = new Dirt();
+        addObject(dirt13, (32*36)-16,(32*7)+16);
+        
+        Dirt dirt01 = new Dirt();
+        addObject(dirt01, (32*14)-16,(32*6)+16);
+        
+        Dirt dirt02 = new Dirt();
+        addObject(dirt02, (32*15)-16,(32*6)+16);
+        
+        Dirt dirt03 = new Dirt();
+        addObject(dirt03, (32*14)-16,(32*7)+16);
+        
+        int platLen6 = 29;
+        int platPos6 = 12;
+        generateFloatPlatform(platPos6, platLen6, 5);
+        
+        int platLen55 = 1;
+        int platPos55 = 23;
+        generatePlatform(platPos55, platLen55, 15);
+        
+        int platLen5 = 8;
+        int platPos5 = 15;
+        generatePlatform(platPos5, platLen5, 14);
+        
+        int platLen4 = 1;
+        int platPos4 = 14;
+        generatePlatform(platPos4, platLen4, 13);
+        
+        int platLen3 = 1;
+        int platPos3 = 13;
+        generatePlatform(platPos3, platLen3, 12);
+        
+        int platLen2 = 7;
+        int platPos2 = 6;
+        generatePlatform(platPos2, platLen2, 6);
         
         int platLen1 = 6;
         int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,14); 
+        generatePlatform(platPos1, platLen1,5); 
         
         Portal portal = new Portal();
         addObject(portal, (32*19), (32*12));
                
-        LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*38) - 16,(32*5));
+        LevelGem levelGem1 = new LevelGem();
+        addObject(levelGem1, (32*38) - 16,(32*12));
+        
+        LevelGem levelGem2 = new LevelGem();
+        addObject(levelGem2, (32*56) - 16,(32*8));
 
-         MissingGem missingGem = new MissingGem();
-        missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
-        addObject(missingGem, (32*22),(32*2));
+        MissingGem missingGem1 = new MissingGem();
+        missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
+        addObject(missingGem1, (32*20),(32*1)+4);
+        
+        MissingGem missingGem2 = new MissingGem();
+        missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
+        addObject(missingGem2, (32*22),(32*1)+4);
         
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
+        addObject(player, 0, (32*3));
         
         //addObject(new Counter(), (32*2), (32*2));
         //time.mark();

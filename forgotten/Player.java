@@ -31,6 +31,7 @@ public class Player extends Moving
      
     private int horzSpeed;
     private int vertSpeed;
+    private int gemCounter;
     
     private int leftKeyPressCount;
     private int rightKeyPressCount;
@@ -60,6 +61,7 @@ public class Player extends Moving
         width = 43*2;
         vertSpeed = 2;
         horzSpeed = 4;
+        gemCounter = 0;
         
         leftKeyPressCount = 0;
         rightKeyPressCount = 0;
@@ -311,17 +313,69 @@ public class Player extends Moving
     
     private void hitGem() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
-        if( MyWorld.LEVEL >= 1) {
+        
+        /*if( MyWorld.LEVEL == 3) {
+            MissingGem missingGem1 = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
+            MissingGem missingGem2 = (MissingGem) getWorld().getObjects(MissingGem.class).get(1);
+            MissingGem missingGem3 = (MissingGem) getWorld().getObjects(MissingGem.class).get(2);
+            if (getOneIntersectingObject(LevelGem.class) != null) {
+                Greenfoot.playSound("gem.wav");
+                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
+                gemCounter++;
+                }
+            if  (gemCounter == 1) {
+                missingGem1.setImage("gem2.png");
+                missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
+            }
+            if  (gemCounter == 2) {
+                missingGem2.setImage("gem2.png");
+                missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
+            }
+            if  (gemCounter == 3) {
+                missingGem3.setImage("gem2.png");
+                missingGem3.getImage().scale(missingGem3.getImage().getWidth() * 2, missingGem3.getImage().getHeight() * 2);
+            
+                hasLevelGem = true;
+            }
+        }
+        
+        if( MyWorld.LEVEL == 2) {
+            MissingGem missingGem1 = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
+            MissingGem missingGem2 = (MissingGem) getWorld().getObjects(MissingGem.class).get(1);
+            if (getOneIntersectingObject(LevelGem.class) != null) {
+                Greenfoot.playSound("gem.wav");
+                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
+                gemCounter++;
+                }
+            if  (gemCounter == 1) {
+                missingGem1.setImage("gem2.png");
+                missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
+            }
+            if  (gemCounter == 2) {
+                missingGem2.setImage("gem2.png");
+                missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
+            
+                hasLevelGem = true;
+            }
+        }*/
+        
+        if( MyWorld.LEVEL == 1) {
             MissingGem missingGem = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
             if (getOneIntersectingObject(LevelGem.class) != null) {
                 Greenfoot.playSound("gem.wav");
                 getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
-                hasLevelGem = true;
+                gemCounter++;
                 missingGem.setImage("gem2.png");
                 missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
-                isPortalOpen = true;
-                portal.setImage("lift-open.png");
             }
+            if  (gemCounter == 1) {
+                hasLevelGem = true;
+            }
+        }
+        
+        if (hasLevelGem) {
+            isPortalOpen = true;
+            portal.setImage("lift-open.png");
         }
     }
     
@@ -331,8 +385,8 @@ public class Player extends Moving
         
             if(getOneIntersectingObject(Portal.class) != null) {
                 if (MyWorld.LEVEL == 0) {
-                    MyWorld.LEVEL = 1;
                     Greenfoot.setWorld(new Level1());
+                    MyWorld.LEVEL = 1;
                 } else if (MyWorld.LEVEL > 0 && Greenfoot.isKeyDown("e") && isPortalOpen && hasLevelGem) {
                     world.addObject(new LevelCompleted(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
                     world.addObject(new Ribbon(), MyWorld.WIDTH/2, MyWorld.HEIGHT/2);

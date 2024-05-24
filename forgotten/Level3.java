@@ -118,9 +118,17 @@ public class Level3 extends World
         LevelGem levelGem = new LevelGem();
         addObject(levelGem, (32*40) - 16,(32*13));
         
-        MissingGem missingGem = new MissingGem();
-        missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
-        addObject(missingGem, (32*22),(32*2));
+       MissingGem missingGem1 = new MissingGem();
+        missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
+        addObject(missingGem1, (32*18),(32*1)+4);
+        
+        MissingGem missingGem2 = new MissingGem();
+        missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
+        addObject(missingGem2, (32*20),(32*1)+4);
+        
+        MissingGem missingGem3 = new MissingGem();
+        missingGem3.getImage().scale(missingGem3.getImage().getWidth() * 2, missingGem3.getImage().getHeight() * 2);
+        addObject(missingGem3, (32*22),(32*1)+4);
             
         Player player = new Player();
         addObject(player, 0, MyWorld.HEIGHT - 142 + 32);

@@ -19,58 +19,60 @@ public class Level0 extends World
         }
         
         TreeTopBack treeTopBack = new TreeTopBack();
-        addObject(treeTopBack,(32*15), (32*6));
+        addObject(treeTopBack,(32*15), (32*5));
         
         TreeTopBack treeTopBack2 = new TreeTopBack();
-        addObject(treeTopBack2,(32*24), (32*6));
+        addObject(treeTopBack2,(32*24), (32*5));
         
         TreeTopBack treeTopBack3 = new TreeTopBack();
-        addObject(treeTopBack3,(32*17), (32*6));
+        addObject(treeTopBack3,(32*17), (32*5));
         
         TreeTopBack treeTopBack4 = new TreeTopBack();
-        addObject(treeTopBack4,(32*11), (32*6));
+        addObject(treeTopBack4,(32*11), (32*5));
         
         Tree1 tree1 = new Tree1();
-        addObject(tree1,(32*10), (32*9));
+        addObject(tree1,(32*10), (32*8));
         
         Tree1 tree12 = new Tree1();
-        addObject(tree12,(32*15)-16, (32*9));
+        addObject(tree12,(32*15)-16, (32*8));
         tree12.getImage().mirrorHorizontally();
         
         Tree2 tree2 = new Tree2();
-        addObject(tree2,(32*16), (32*9));
+        addObject(tree2,(32*16), (32*8));
         
         Tree2 tree22 = new Tree2();
-        addObject(tree22,(32*24), (32*9));
+        addObject(tree22,(32*24), (32*8));
         
         TreeTopFront treeTopFront = new TreeTopFront();
-        addObject(treeTopFront,(32*24), (32*6));
+        addObject(treeTopFront,(32*24), (32*5));
         
         TreeTopFront treeTopFront2 = new TreeTopFront();
-        addObject(treeTopFront2,(32*16), (32*6));
+        addObject(treeTopFront2,(32*16), (32*5));
         
         TreeTopFront treeTopFront3 = new TreeTopFront();
-        addObject(treeTopFront3,(32*11), (32*6));
+        addObject(treeTopFront3,(32*11), (32*5));
         
         int platLen1 = 30;
         int platPos1 = 0;
-        generatePlatform(platPos1, platLen1,14); 
+        generatePlatform(platPos1, platLen1,13); 
 
         int platLen = 1;
         int platPos = -1;
         generatePlatform(platPos, platLen,0); 
         
+        
+        
         Spirit spirit1 = new Spirit();
-        addObject(spirit1, (32*20), (32*12));
+        addObject(spirit1, (32*20), (32*11));
         
         Spirit spirit2 = new Spirit();
-        addObject(spirit2, (32*24)+4, (32*12));
+        addObject(spirit2, (32*24)+4, (32*11));
         
         Portal portal = new Portal();
-        addObject(portal, (32*25), (32*12));
+        addObject(portal, (32*25), (32*13));
 
         Player player = new Player();
-        addObject(player, 0, MyWorld.HEIGHT - 142 + 16);
+        addObject(player, 0, (32*11));
         
         //addObject(new Counter(), (32*2), (32*2));
         //time.mark();

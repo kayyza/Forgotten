@@ -19,7 +19,7 @@ public class MyWorld extends World
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
-        LEVEL = -2;
+        LEVEL = 1;
     
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);
