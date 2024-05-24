@@ -19,7 +19,7 @@ public class MyWorld extends World
          
         HEIGHT = getHeight();
         WIDTH = getWidth();
-        LEVEL = 1;
+        LEVEL = -2;
     
         GreenfootImage bg = getBackground();
         bg.setColor(Color.LIGHT_GRAY);
@@ -99,6 +99,7 @@ public class MyWorld extends World
     
     public static void changeWorld() {
         switch(LEVEL) {
+            case -3 : Greenfoot.setWorld(new TutorialScreen()); break;
             case -2 : Greenfoot.setWorld(new SplashScreen()); break;
             case -1 : Greenfoot.setWorld(new StartScreen()); break;
             case 0 : Greenfoot.setWorld(new Level0()); break;

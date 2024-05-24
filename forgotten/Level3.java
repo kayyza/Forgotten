@@ -14,111 +14,128 @@ public class Level3 extends World
     public void prepare() {  
         if( MyWorld.LEVEL != 3) {
             MyWorld.LEVEL = 3;
+            Player.gemCounter = 0;
         }
         
         int waterLen1 = 24*2;
         int waterPos1 = 0;
         generateWater(waterPos1, waterLen1,14);
         
-        int platLen23 = 3;
-        int platPos23 = 82;
-        generateFloatPlatform(platPos23, platLen23,3);
+        Dirt dirt3 = new Dirt();
+        addObject(dirt3, 32*92-16, 32*5+16);
         
-        int platLen22 = 3;
-        int platPos22 = 87;
-        generateFloatPlatform(platPos22, platLen22,3);
-        
-        int platLen21 = 3;
-        int platPos21 = 91;
-        generateFloatPlatform(platPos21, platLen21,6);
-        
-        int platLen20 = 3;
+        int platLen20 = 5;
         int platPos20 = 87;
-        generateFloatPlatform(platPos20, platLen20,9);
+        generateFloatPlatform(platPos20, platLen20,4);
         
-        int platLen19 = 3;
-        int platPos19 = 91;
-        generateFloatPlatform(platPos19, platLen19,12);
+        int platLen19 = 5;
+        int platPos19 = 92;
+        generatePlatform(platPos19, platLen19,5);
         
-        int platLen18 = 3;
-        int platPos18 = 87;
-        generateFloatPlatform(platPos18, platLen18,14);
+        int platLen28 = 1;
+        int platPos28 = 91;
+        generatePlatform(platPos28, platLen28,11);
+        
+        int platLen18 = 2;
+        int platPos18 = 89;
+        generatePlatform(platPos18, platLen18,13);
+        
+        int platLen27 = 2;
+        int platPos27 = 86;
+        generateFloatPlatform(platPos27, platLen27,8);
         
         int platLen17 = 3;
-        int platPos17 = 83;
-        generateFloatPlatform(platPos17, platLen17,14);
+        int platPos17 = 80;
+        generateFloatPlatform(platPos17, platLen17,6);
         
-        int platLen16 = 3;
-        int platPos16 = 77;
-        generateFloatPlatform(platPos16, platLen16,14);
+        int platLen16 = 5;
+        int platPos16 = 81;
+        generatePlatform(platPos16, platLen16,14);
         
-        int platLen15 = 4;
-        int platPos15 = 70;
+        int platLen15 = 3;
+        int platPos15 = 74;
         generateFloatPlatform(platPos15, platLen15,11);
         
-        int platLen14 = 4;
-        int platPos14 = 64;
-        generateFloatPlatform(platPos14, platLen14,11);
+        int platLen24 = 1;
+        int platPos24 = 69;
+        generatePlatform(platPos24, platLen24,11);
         
-        int platLen13 = 4;
-        int platPos13 = 57;
-        generateFloatPlatform(platPos13, platLen13,11);
+        int platLen14 = 3;
+        int platPos14 = 66;
+        generatePlatform(platPos14, platLen14,10);
+        
+        int platLen13 = 10;
+        int platPos13 = 56;
+        generateFloatPlatform(platPos13, platLen13,9);
+        
+        Dirt dirt = new Dirt();
+        addObject(dirt, 32*57-16, 32*10+16);
+        
+        int platLen32 = 2;
+        int platPos32 = 43;
+        generateFloatPlatform(platPos32, platLen32,5);
         
         int platLen12 = 2;
-        int platPos12 = 38;
-        generatePlatform(platPos12, platLen12,14);
+        int platPos12 = 48  ;
+        generateFloatPlatform(platPos12, platLen12,6);
+        
+        int platLen31 = 1;
+        int platPos31 = 52;
+        generatePlatform(platPos31, platLen31,11);
         
         int platLen11 = 3;
-        int platPos11 = 51;
-        generatePlatform(platPos11, platLen11,12);
+        int platPos11 = 53;
+        generatePlatform(platPos11, platLen11,10);
         
         int platLen10 = 3;
         int platPos10 = 46;
-        generatePlatform(platPos10, platLen10,13);
+        generatePlatform(platPos10, platLen10,12);
         
         int platLen9 = 4;
-        int platPos9 = 40;
-        generatePlatform(platPos9, platLen9,14);
+        int platPos9 = 39;
+        generatePlatform(platPos9, platLen9,13);
         
-        int platLen8 = 10;
+        int platLen8 = 11;
         int platPos8 = 28;
-        generateFloatPlatform(platPos8, platLen8,5);
+        generateFloatPlatform(platPos8, platLen8,4);
         
-        int platLen7 = 3;
-        int platPos7 = 24;
-        generateFloatPlatform(platPos7, platLen7,7);
+        int platLen7 = 1;
+        int platPos7 = 35;
+        generatePlatform(platPos7, platLen7,14);
         
-        int platLen6 = 3;
-        int platPos6 = 28;
-        generateFloatPlatform(platPos6, platLen6,9);
+        int platLen6 = 1;
+        int platPos6 = 34;
+        generatePlatform(platPos6, platLen6,12);
         
-        int platLen5 = 3;
-        int platPos5 = 24;
-        generateFloatPlatform(platPos5, platLen5,11);
+        int platLen4 = 6;
+        int platPos4 = 28;
+        generatePlatform(platPos4, platLen4,11);
         
-        int platLen4 = 3;
-        int platPos4 = 20;
-        generatePlatform(platPos4, platLen4,14);
-        
-        int platLen3 = 3;
-        int platPos3 = 15;
+        int platLen3 = 4;
+        int platPos3 = 21;
         generatePlatform(platPos3, platLen3,13);
         
         int platLen2 = 3;
-        int platPos2 = 9;
+        int platPos2 = 15;
         generatePlatform(platPos2, platLen2,14);
         
-        int platLen1 = 6;
+        int platLen1 = 12;
         int platPos1 = 0;
         generatePlatform(platPos1, platLen1,14);    
         
         Portal portal = new Portal();
-        addObject(portal, (32*84)-16, (32*2));
+        addObject(portal, (32*90)-16, (32*3));
                
-        LevelGem levelGem = new LevelGem();
-        addObject(levelGem, (32*40) - 16,(32*13));
+        LevelGem levelGem1 = new LevelGem();
+        addObject(levelGem1, (32*29) - 16,(32*3));
         
-       MissingGem missingGem1 = new MissingGem();
+        LevelGem levelGem2 = new LevelGem();
+        addObject(levelGem2, (32*41),(32*5));
+        
+        LevelGem levelGem3 = new LevelGem();
+        addObject(levelGem3, (32*72),(32*7));
+        
+        MissingGem missingGem1 = new MissingGem();
         missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
         addObject(missingGem1, (32*18),(32*1)+4);
         
@@ -133,8 +150,7 @@ public class Level3 extends World
         Player player = new Player();
         addObject(player, 0, MyWorld.HEIGHT - 142 + 32);
         
-        //addObject(new Counter(), (32*2), (32*2));
-        //time.mark();
+        addObject(new Counter(), (32*2), (32*2));
     }   
     
     public void generateSky() {

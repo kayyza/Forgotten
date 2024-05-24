@@ -14,6 +14,7 @@ public class Level2 extends World
     public void prepare() {  
         if( MyWorld.LEVEL != 2) {
             MyWorld.LEVEL = 2;
+            Player.gemCounter = 0;
         }
         
         int waterLen1 = 24*2;
@@ -125,8 +126,7 @@ public class Level2 extends World
         Player player = new Player();
         addObject(player, 0, (32*3));
         
-        //addObject(new Counter(), (32*2), (32*2));
-        //time.mark();
+        addObject(new Counter(), (32*2), (32*2));
     }   
     
     public void generateSky() {

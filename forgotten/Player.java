@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.*;
 public class Player extends Moving
 {
     //GifImage runAnimation;
@@ -31,7 +31,7 @@ public class Player extends Moving
      
     private int horzSpeed;
     private int vertSpeed;
-    private int gemCounter;
+    public static int gemCounter;
     
     private int leftKeyPressCount;
     private int rightKeyPressCount;
@@ -314,51 +314,6 @@ public class Player extends Moving
     private void hitGem() {
         Portal portal = (Portal) getWorld().getObjects(Portal.class).get(0);
         
-        /*if( MyWorld.LEVEL == 3) {
-            MissingGem missingGem1 = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
-            MissingGem missingGem2 = (MissingGem) getWorld().getObjects(MissingGem.class).get(1);
-            MissingGem missingGem3 = (MissingGem) getWorld().getObjects(MissingGem.class).get(2);
-            if (getOneIntersectingObject(LevelGem.class) != null) {
-                Greenfoot.playSound("gem.wav");
-                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
-                gemCounter++;
-                }
-            if  (gemCounter == 1) {
-                missingGem1.setImage("gem2.png");
-                missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
-            }
-            if  (gemCounter == 2) {
-                missingGem2.setImage("gem2.png");
-                missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
-            }
-            if  (gemCounter == 3) {
-                missingGem3.setImage("gem2.png");
-                missingGem3.getImage().scale(missingGem3.getImage().getWidth() * 2, missingGem3.getImage().getHeight() * 2);
-            
-                hasLevelGem = true;
-            }
-        }
-        
-        if( MyWorld.LEVEL == 2) {
-            MissingGem missingGem1 = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
-            MissingGem missingGem2 = (MissingGem) getWorld().getObjects(MissingGem.class).get(1);
-            if (getOneIntersectingObject(LevelGem.class) != null) {
-                Greenfoot.playSound("gem.wav");
-                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
-                gemCounter++;
-                }
-            if  (gemCounter == 1) {
-                missingGem1.setImage("gem2.png");
-                missingGem1.getImage().scale(missingGem1.getImage().getWidth() * 2, missingGem1.getImage().getHeight() * 2);
-            }
-            if  (gemCounter == 2) {
-                missingGem2.setImage("gem2.png");
-                missingGem2.getImage().scale(missingGem2.getImage().getWidth() * 2, missingGem2.getImage().getHeight() * 2);
-            
-                hasLevelGem = true;
-            }
-        }*/
-        
         if( MyWorld.LEVEL == 1) {
             MissingGem missingGem = (MissingGem) getWorld().getObjects(MissingGem.class).get(0);
             if (getOneIntersectingObject(LevelGem.class) != null) {
@@ -367,9 +322,28 @@ public class Player extends Moving
                 gemCounter++;
                 missingGem.setImage("gem2.png");
                 missingGem.getImage().scale(missingGem.getImage().getWidth() * 2, missingGem.getImage().getHeight() * 2);
+                if  (gemCounter == 1) {
+                    hasLevelGem = true;
+                }
             }
-            if  (gemCounter == 1) {
-                hasLevelGem = true;
+        } else {
+            if (getOneIntersectingObject(LevelGem.class) != null) {
+                Greenfoot.playSound("gem.wav");
+                getWorld().removeObject(getOneIntersectingObject(LevelGem.class));
+                gemCounter++;
+                List<MissingGem> missingGems = new ArrayList<MissingGem>();
+                
+                for (int i=0; i < missingGems.size(); i++) {
+                    MissingGem missingGem = (MissingGem) getWorld().getObjects(MissingGem.class).get(i);
+                    missingGem.setImage("gem2.png");
+                    missingGem.getImage().scale(missingGem.getImage().getWidth()*2, missingGem.getImage().getHeight()*2);
+                }
+                if  (MyWorld.LEVEL == 2 && gemCounter == 2) {
+                    hasLevelGem = true;
+                }
+                if  (MyWorld.LEVEL == 3 && gemCounter == 3) {
+                    hasLevelGem = true;
+                }
             }
         }
         

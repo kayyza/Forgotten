@@ -8,15 +8,17 @@ public class Level0 extends World
     {    
         super(768, 512, 1, false); 
 
-        showText("Level : " + MyWorld.LEVEL, 32*2, 32*1);
+        if( MyWorld.LEVEL != 0) {
+            MyWorld.LEVEL = 0;
+            showText("Level : " + MyWorld.LEVEL, 32*2, 32*1);
+        }
+        
         generateSky();
         prepare();
     }
         
     public void prepare() {        
-        if( MyWorld.LEVEL != 0) {
-            MyWorld.LEVEL = 0;
-        }
+        
         
         TreeTopBack treeTopBack = new TreeTopBack();
         addObject(treeTopBack,(32*15), (32*5));
